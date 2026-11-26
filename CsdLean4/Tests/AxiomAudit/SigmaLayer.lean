@@ -24268,4 +24268,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.levelProj_one_mulVec_exp_bandContact_sum
 
+/-! #437, UO-26: the gated contact term against the ungated one (`RecordLayer/TransponderBandGate.lean`). -/
+
+/-- info: 'CSD.RecordLayer.compositeH_add_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeH_add_smul
+
+/-- info: 'CSD.RecordLayer.norm_exp_gated_sub_ungated_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_gated_sub_ungated_mul_le
+
+/-- info: 'CSD.RecordLayer.abs_norm_mul_gated_sub_ungated_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_norm_mul_gated_sub_ungated_le
+
+/-- info: 'CSD.RecordLayer.transponder_band_gated_second_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_band_gated_second_level
+
 end CSD.Tests.AxiomAudit

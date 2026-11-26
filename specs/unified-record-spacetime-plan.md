@@ -1534,6 +1534,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-264 | **The place of what is launched: a transponder without hopping keeps it (UO-26, item (2), the place; an obstruction for item (3) at a distance).** If the transponder's Hamiltonian `C` and the operator `Y` of the contact term have no entry between different transponder sites, the projector on any set `B` of transponder sites commutes with `compositeH M₀ C + g · gateOp σ τ r Y`, for every messenger Hamiltonian and every `g`. So a state with no weight on the transponder sites `B` has none at any flow time. A pointer coupled to the transponder's second level on such sites counts `0` on every fibre, with the contact term of UA-19 present. Level energies with no hopping (UD-251 to UD-263) and the level swap meet the hypothesis | `diagonal_mul_of_site_preserving`, `siteSetProj_mul_of_site_preserving`, `diagonal_ite_isHermitian`, `diagonal_ite_mul_self`, `mul_neg_I_smul_add_smul_comm`, `blockDiagonal_smul_one_apply_of_site_ne`, `levelProj_mul_siteSetProj`, `one_kronecker_diagonal`, `one_kronecker_siteSetProj_mul_coincProj`, `one_kronecker_siteSetProj_mul_transponderH`, `transponder_site_conserved`, `one_kronecker_siteSetProj_mulVec_prod`, `transponder_distant_reading_idle` (`RecordLayer/TransponderPlace.lean`) | an obstruction for the transponder as built in Lean, not for UA-19: it says nothing against a second level with a band, which UA-19 (a) and (d) leave open and no statement has yet; "no entry between different sites" is a hypothesis on `C` and `Y`; the messenger is not constrained |
 | UD-265 | **The transponder of UA-21: the two levels' free motion, and item (1) of UO-26 for it.** The transponder's blocks are `E₀ · 1` for the first level and a Hermitian `H₁` for the second. Every state of the first level moves by the phase `e^{−iE₀s}`. With the lattice Dirac band and no contact term, the level swap of a flat packet resting in the first level is that packet in the second level; after `s ≥ 0` it is the packet at `s`, with weight at most `flatTailD s` outside the box moving at the band's group velocity. With the contact term and any Hermitian `H₁`: while the messenger's box is not in contact with the transponder's sites the part in the second level is at most `‖Q‖ |g| √(flatTailD t) · t` | `bandBlocks`, `bandBlocks_isHermitian`, `inLevel`, `inLevel_smul`, `inLevel_zero_apply_of_snd_eq_one`, `sum_norm_sq_inLevel`, `blockDiagonal_mulVec_inLevel`, `inLevel_sum`, `exp_blockDiagonal_mulVec_inLevel_of_eigen`, `levelSwap_mulVec_inLevel_zero`, `exp_bandBlocks_mulVec_inLevel_zero`, `levelSwap_apply_of_site_ne`, `transponder_band_swapped_moves`, `transponder_band_launch_le` (`RecordLayer/TransponderBand.lean`) | **no launch is shown for this transponder**: the statement about the swapped packet has no contact term, so it says what a swapped state would do and not that the meeting swaps it; the level swap does not commute with these blocks, so UD-253 to UD-263 do not apply; the direction and the speed are those of the prepared packet (UA-21, risk (i)); a first level with no hopping; no pointer, no arena, no reading |
 | UD-266 | **The transponder of UA-21 with the swap ungated: each mode of the band turns on its own (UO-26, item (2), a step).** The swap is the identity on the sites, so for an eigenvector `u` of the second level's Hamiltonian, eigenvalue `E₁`, the transponder's Hamiltonian with the term `g X` keeps the plane of "`u` in the first level" and "`u` in the second", and is there the transponder of UD-262 with level energies `E₀`, `E₁`. With `Ω² = g² + ((E₁ − E₀)/2)²`, `Ω > 0`, the orbit of `u` in the first level is `e^{−i(E₀+E₁)s/2} ((cos Ωs + i (δ/Ω) sin Ωs) u₀ − i (g/Ω) sin Ωs · u₁)`; the second level holds exactly `(g/Ω)² sin² (Ωs)` of the mode's weight; for a sum of modes the launched wave function is the same sum with each amplitude multiplied by `−i e^{−i(E₀+E_m)s/2} (g/Ω_m) sin (Ω_m s)` | `exp_mulVec_eq_of_agree_on_pair`, `exp_smul_mulVec_eq_of_agree_on_pair`, `levelSwap_mulVec_inLevel_one`, `levelProj_mulVec_inLevel_same`, `levelProj_mulVec_inLevel_of_ne`, `blockDiagonal_smul_one_mulVec_inLevel`, `detunedAxis_mulVec_inLevel_zero`, `exp_levels_swap_mulVec_inLevel_zero`, `exp_bandContact_mulVec_inLevel_zero`, `levelProj_one_mulVec_exp_bandContact`, `sum_norm_sq_levelProj_one_exp_bandContact`, `levelProj_one_mulVec_exp_bandContact_sum` (`RecordLayer/TransponderBandRabi.lean`) | **no gate and no messenger**: the swap acts at all times and at every site, so no launch by a meeting is shown; exact for one mode, and for a sum of modes only the wave function, not its weight; `Ω > 0` for each mode is a hypothesis; any Hermitian or non-Hermitian `H₁` with the stated eigenvectors, the lattice Dirac band not substituted |
+| UD-267 | **The gated contact term against the ungated one, for any transponder (UO-26, item (2), a step).** `M₀`, `C`, `Y` Hermitian, `Y² = 1`, `Y` with no entry between different sites of the second carrier. For `t ≥ 0` the orbit of `X` under `compositeH M₀ C + g · gateOp σ τ r Y` is its orbit under `compositeH M₀ (C + g Y)` within `|g| ∫₀ᵗ ‖P' e^{−is · compositeH M₀ (C + gY)} X‖ ds`, `P'` the projector on the configurations where the carriers are not in the relation; the same for the norm of any part `Q`, `‖Q‖ ≤ 1`; for the transponder of UA-21 and `Q` the second level | `compositeH_add_smul`, `norm_exp_gated_sub_ungated_mul_le`, `abs_norm_mul_gated_sub_ungated_le`, `transponder_band_gated_second_level` (`RecordLayer/TransponderBandGate.lean`) | **the integral is not evaluated**: it is the amplitude apart along the *ungated* orbit, on which the launched part moves, and no packet is put in; so no launch by a meeting is shown; contact from the flow time `0`; `Y` need not commute with `C`, which is what UD-258 and UD-262 required |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2478,7 +2479,7 @@ rest" there moves at about `0.45`), and its window, localisation and budget theo
 not been restated for a window centred on the mode `0` (done the same day, on the ring:
 UD-172). (R2, the wall.) *Since 2026-11-15, UD-173, for one Dirac carrier; before that:
 one lemma, parked.*
-`arenaObs_sub_mirror_le` (a parked local file, `UnifiedMirror.lean`, not in the repository): a state minus its
+`arenaObs_sub_mirror_le` (a parked local file, `UnifiedMirror.lean`, never in the repository and deleted on 2026-11-26 at the author's word, UD-173 having done its work; it was not in the repository): a state minus its
 mirror image occupies a mirror-symmetric projection at most twice as much as the state. The
 chain with two walls is the mirror-odd sector of the ring (UA-18 (a)); by
 `arenaObs_coincProj_prodRay` the weight of a coincidence projector on a product ray is a sum
@@ -3505,6 +3506,17 @@ in contact, and its comparison with the ungated term is owed for this transponde
 both the resting part and the part that has left inside the contact region (UA-21, risk
 (iii)). The weight of the launched sum, which needs the modes' orthogonality. A
 messenger, a receiver, R1 to R7 of §9.4. No new assumption.
+
+Exact scope of UD-267 (BACKLOG #437; obligation UO-26; assumptions UA-19, UA-21). What it
+gives. The comparison that UD-266 left owed, for every transponder Hamiltonian at once:
+the contact term of UA-19 (b) does what the swap acting everywhere does, up to `|g|`
+times the amplitude that the ungated orbit has apart, summed over the flow time. With
+UD-266 the two halves of item (2) for UA-21 are both stated. What it does not give. Their
+join. The ungated orbit of a product of a messenger packet and a transponder is the
+product of the messenger's free orbit and the transponder's solved orbit; that, and the
+weight of that product outside contact, are not written. The transponder's solved orbit
+is a packet whose amplitudes are modulated mode by mode, so the flat-packet tail bounds
+do not apply to it as they stand. No new assumption.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -5054,6 +5066,9 @@ time. It is not a statement about every dynamics on `Σ`.
   each mode of the band turns between the levels at its own `Ω`, exactly; the launched
   wave function of a sum of modes in closed form. No gate, no messenger, and the weight
   of the sum is not computed.
+  ▸ **Twenty-fourth brick, 2026-11-26 (BACKLOG #437) → UD-267.** The gated term against
+  the ungated one for any transponder Hamiltonian, within `|g|` times the amplitude
+  apart along the ungated orbit. The integral is not evaluated for a packet.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
