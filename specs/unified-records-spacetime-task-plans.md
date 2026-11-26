@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-265; UA-21 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-266; UA-21 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -427,6 +427,12 @@ before the meeting).
    of the time of contact; (c) *band_launch_in_region*, its weight outside a region that
    holds the moving box for every launch time; (d) the reading by a pointer on that
    region, with the control of UD-264's kind.
+   Step (a) is replaced (2026-11-26, `RecordLayer/TransponderBandRabi.lean`, UD-266): with
+   the swap ungated each mode turns exactly, `exp_bandContact_mulVec_inLevel_zero`. Now
+   owed in its place: (a') the gated term against the ungated one for this transponder,
+   the error being the weight of the reference orbit outside contact; (b') the weight of
+   the launched sum from the modes' orthogonality, with `(g/Ω_m)² sin² (Ω_m s)` bounded
+   below over the window.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

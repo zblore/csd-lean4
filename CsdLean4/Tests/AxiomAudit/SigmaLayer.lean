@@ -24218,4 +24218,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_band_launch_le
 
+/-! #437, UO-26: the transponder of UA-21 with the swap ungated, mode by mode (`RecordLayer/TransponderBandRabi.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_mulVec_eq_of_agree_on_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_mulVec_eq_of_agree_on_pair
+
+/-- info: 'CSD.RecordLayer.exp_smul_mulVec_eq_of_agree_on_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_smul_mulVec_eq_of_agree_on_pair
+
+/-- info: 'CSD.RecordLayer.levelSwap_mulVec_inLevel_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelSwap_mulVec_inLevel_one
+
+/-- info: 'CSD.RecordLayer.levelProj_mulVec_inLevel_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_mulVec_inLevel_same
+
+/-- info: 'CSD.RecordLayer.levelProj_mulVec_inLevel_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_mulVec_inLevel_of_ne
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_smul_one_mulVec_inLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_smul_one_mulVec_inLevel
+
+/-- info: 'CSD.RecordLayer.detunedAxis_mulVec_inLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis_mulVec_inLevel_zero
+
+/-- info: 'CSD.RecordLayer.exp_levels_swap_mulVec_inLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_levels_swap_mulVec_inLevel_zero
+
+/-- info: 'CSD.RecordLayer.exp_bandContact_mulVec_inLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_bandContact_mulVec_inLevel_zero
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mulVec_exp_bandContact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mulVec_exp_bandContact
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_levelProj_one_exp_bandContact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_levelProj_one_exp_bandContact
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mulVec_exp_bandContact_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mulVec_exp_bandContact_sum
+
 end CSD.Tests.AxiomAudit
