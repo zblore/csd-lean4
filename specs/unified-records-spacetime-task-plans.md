@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-264 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-265; UA-21 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -418,6 +418,15 @@ before the meeting).
    level. That band and the transponder's window of momenta are the author's choice
    (UA-19 (a), (d)) and need a clause; with them the level swap does not commute with the
    transponder's Hamiltonian, and items 1 and 2 have to be redone for the new energy.
+   The clause is UA-21 (2026-11-26). Its free motion and item 1 are done
+   (`RecordLayer/TransponderBand.lean`, UD-265): `transponder_band_swapped_moves`,
+   `transponder_band_launch_le`. Next, in order: (a) *band_launch_first_order*, the
+   first-order term while wholly in contact, as an integral over launch times of the
+   packet moved by the time since its launch; (b) *band_launch_weight_ge*, its norm from
+   below when the detunings `(E(k) − E₀)/2` over the window are small against the inverse
+   of the time of contact; (c) *band_launch_in_region*, its weight outside a region that
+   holds the moving box for every launch time; (d) the reading by a pointer on that
+   region, with the control of UD-264's kind.
 4. *echo_gate_reading*: a gate between the second level and an observer's clock, with a
    budget for a weight of order `g²`: the present gates need nearly full weight, so this
    needs either a strength that makes the launched weight of order one (beyond first

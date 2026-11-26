@@ -746,6 +746,46 @@ what would discharge or constrain it.
   one-way on the fibres where `g(ψ₂) = 0`; whether that is enough for the plan's "the second
   interaction depends on the recorded outcome" is for the author.
 
+### UA-21 — a band for the transponder's second level (admitted 2026-11-26; its free motion is `RecordLayer/TransponderBand.lean`, UD-265)
+
+* **Assumed.** Obligation UO-26. UD-264 shows that the transponder of UD-251 to UD-263, which
+  does not hop, keeps what is launched at its own sites. The assistant recommended a band on
+  2026-11-25 and asked; the author's word is "push and continue" (2026-11-26). It is taken
+  here as admitting the clause, and the clause is to be struck if that was not meant. It
+  fixes what UA-19 (a) left open. Every item below is a commitment about what will be
+  defined.
+  (a) *The transponder's sites.* The messenger's lattice, with a spinor index of its own.
+  (b) *The first level.* One energy `E₀` and no hopping. Every state of it is stationary,
+  so "at rest" is exact and the first level does not spread.
+  (c) *The second level.* The lattice Dirac Hamiltonian on those sites, with its own
+  hopping, mass and Clifford family. This is the band of UA-19 (d).
+  (d) *The preparation (UA-4).* The transponder starts in its first level with the wave
+  function of a flat packet of the second level's positive branch about a momentum `k₀'`,
+  on the sites where the event is to be. In the first level this packet does not move.
+  (e) *The contact term.* As UA-19 (b): the coincidence projector times the level swap. The
+  swap is the identity on the sites and on the spinor index.
+  (f) *What may not be assumed.* The time of the launch, and that any of the launched part
+  reaches a receiver: both are to come from the flow.
+* **Where.** `RecordLayer/TransponderBand.lean` (`bandBlocks`, `inLevel`,
+  `exp_bandBlocks_mulVec_inLevel_zero`, `transponder_band_swapped_moves`,
+  `transponder_band_launch_le`; UD-265, 2026-11-26): the free motion of the two levels and
+  item (1) of UO-26. No launch is shown for this transponder.
+* **Standing.** A choice of band and of preparation, on the assistant's recommendation. It
+  replaces the transponder of UD-251 to UD-263 for a return that is to travel and leaves
+  those statements as they are. The author has not yet read the clause.
+* **Known risks, stated so that a failure is recognised as one.** (i) **The direction and
+  the speed of the return are set by the preparation**, through `k₀'` in (d): by the test
+  of UO-16 only the time of the launch can then be said to be caused by the meeting. If
+  that is not acceptable the transponder has to be prepared with no preferred direction,
+  and the return is then a wave spreading from a point, of which a receiver gets a part.
+  (ii) With (c) the level swap does not commute with the transponder's Hamiltonian, so the
+  lower bounds of UD-253 to UD-263 do not carry over; each momentum of the packet has its
+  own detuning `(E(k) − E₀)/2`, and the launch is in phase only where that is small against
+  the inverse of the time of contact. (iii) The launched part moves away from the first
+  level's part while the carriers are still in contact, so the contact region has to hold
+  both. (iv) A first level with no hopping is a carrier of infinite mass: an idealisation,
+  and the reason "at rest" is exact.
+
 ## 4. Register 2 — derived properties
 
 
@@ -1477,6 +1517,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-262 | **Levels of different energy: the second level fills as `(|g|/Ω) |sin (Ω t)|` (UO-26, item (2)).** The transponder has no hopping and the level energies `E₀`, `E₁`; `δ = (E₁ − E₀)/2`, `Ω > 0`, `Ω² = g² + δ²`. Then `E₀ P₀ + E₁ P₁ + g X = ((E₀ + E₁)/2) + Ω W` with `W = (δ/Ω)(P₁ − P₀) + (g/Ω) X` a Hermitian involution. For `X` with the transponder in its first level, the part of the orbit under the contact term of UA-19 in the second level has norm within `|g| ∫₀ᵗ ‖P' e^{−isH_c} X‖ ds` of `(|g|/Ω) |sin (Ω t)| ‖X‖`, `H_c` the free Hamiltonian with the mean energy for both levels. For the flat packet in contact with a transponder at rest up to `t`: within `|g| √(flatTailD t) · t` of `(|g|/Ω) |sin (Ω t)|`, so at most `|g|/Ω + |g| √(flatTailD t) · t` | `norm_exp_sub_rabi_add_mul_le`, `detunedAxis`, `levelProj_isHermitian`, `levelProj_zero_mul_levelSwap`, `detunedAxis_isHermitian`, `detunedAxis_mul_self`, `detunedAxis_apply_of_ne`, `detunedAxis_mul_blockDiagonal_smul_one`, `blockDiagonal_smul_one_eq_add`, `mul_turn_mul_of_split`, `transponder_detuned_second_level`, `transponder_detuned_flatPacket`, `transponder_detuned_flatPacket_le` (`RecordLayer/TransponderDetuned.lean`) | contact from the flow time `0`, as in UD-258 (the run that starts apart is UD-263, and the reading UD-260 is stated for level energies since then; the instance UD-261 keeps one energy); the cap `|g|/Ω` holds while the carriers are wholly in contact, within the error, and is not a bound over a whole passage; the reference orbit has the mean energy for both levels; `Ω > 0` is a hypothesis; the amplitude, not its place; no pointer, no arena, no reading |
 | UD-263 | **Levels of different energy, apart and then in contact (UO-26, items (1) and (2) in one run).** For a state with the transponder in its first level the free orbit with level energies `E₀`, `E₁` is the orbit with the mean energy for both levels times the phase `e^{iδs}`. For `0 ≤ t₁ ≤ t` the part of the orbit under the contact term of UA-19 in the second level has norm within `|g| ∫₀^{t₁} ‖P e^{−isH_c} X‖ ds + |g| ∫_{t₁}^{t} ‖P' e^{−isH_c} X‖ ds` of `(|g|/Ω) |sin (Ω (t − t₁))| ‖X‖`. For the flat packet and a transponder at rest, the box apart up to `t₁` and wholly in contact from `t₂`: within `|g| (√ε₁ t₁ + (t₂ − t₁)) + |g| √ε (t − t₂)` of `(|g|/Ω) |sin (Ω (t − t₂))|`. The reading of UD-260 is restated on this bound, and the instance UD-261 is its case `E₀ = E₁` | `norm_exp_skew_mul`, `abs_norm_mul_exp_sub_le_of_stages`, `levelProj_sub_mul_self`, `levelProj_zero_mul_of_firstLevel`, `exp_freeOrbit_mul_of_firstLevel`, `norm_mul_freeOrbit_of_firstLevel`, `transponder_detuned_meeting_second_level`, `transponder_detuned_flatPacket_meeting` (`RecordLayer/TransponderDetunedMeeting.lean`); `transponder_meeting_record` (`RecordLayer/TransponderReading.lean`, restated) | the time of partial contact is counted as error in full; the two box conditions are hypotheses; no instance with `E₀ ≠ E₁`, where the leading term `|g|/Ω` is small against the error unless the tails and the time of partial contact are small too; `Ω > 0` is a hypothesis; the amplitude, not its place |
 | UD-264 | **The place of what is launched: a transponder without hopping keeps it (UO-26, item (2), the place; an obstruction for item (3) at a distance).** If the transponder's Hamiltonian `C` and the operator `Y` of the contact term have no entry between different transponder sites, the projector on any set `B` of transponder sites commutes with `compositeH M₀ C + g · gateOp σ τ r Y`, for every messenger Hamiltonian and every `g`. So a state with no weight on the transponder sites `B` has none at any flow time. A pointer coupled to the transponder's second level on such sites counts `0` on every fibre, with the contact term of UA-19 present. Level energies with no hopping (UD-251 to UD-263) and the level swap meet the hypothesis | `diagonal_mul_of_site_preserving`, `siteSetProj_mul_of_site_preserving`, `diagonal_ite_isHermitian`, `diagonal_ite_mul_self`, `mul_neg_I_smul_add_smul_comm`, `blockDiagonal_smul_one_apply_of_site_ne`, `levelProj_mul_siteSetProj`, `one_kronecker_diagonal`, `one_kronecker_siteSetProj_mul_coincProj`, `one_kronecker_siteSetProj_mul_transponderH`, `transponder_site_conserved`, `one_kronecker_siteSetProj_mulVec_prod`, `transponder_distant_reading_idle` (`RecordLayer/TransponderPlace.lean`) | an obstruction for the transponder as built in Lean, not for UA-19: it says nothing against a second level with a band, which UA-19 (a) and (d) leave open and no statement has yet; "no entry between different sites" is a hypothesis on `C` and `Y`; the messenger is not constrained |
+| UD-265 | **The transponder of UA-21: the two levels' free motion, and item (1) of UO-26 for it.** The transponder's blocks are `E₀ · 1` for the first level and a Hermitian `H₁` for the second. Every state of the first level moves by the phase `e^{−iE₀s}`. With the lattice Dirac band and no contact term, the level swap of a flat packet resting in the first level is that packet in the second level; after `s ≥ 0` it is the packet at `s`, with weight at most `flatTailD s` outside the box moving at the band's group velocity. With the contact term and any Hermitian `H₁`: while the messenger's box is not in contact with the transponder's sites the part in the second level is at most `‖Q‖ |g| √(flatTailD t) · t` | `bandBlocks`, `bandBlocks_isHermitian`, `inLevel`, `inLevel_smul`, `inLevel_zero_apply_of_snd_eq_one`, `sum_norm_sq_inLevel`, `blockDiagonal_mulVec_inLevel`, `inLevel_sum`, `exp_blockDiagonal_mulVec_inLevel_of_eigen`, `levelSwap_mulVec_inLevel_zero`, `exp_bandBlocks_mulVec_inLevel_zero`, `levelSwap_apply_of_site_ne`, `transponder_band_swapped_moves`, `transponder_band_launch_le` (`RecordLayer/TransponderBand.lean`) | **no launch is shown for this transponder**: the statement about the swapped packet has no contact term, so it says what a swapped state would do and not that the meeting swaps it; the level swap does not commute with these blocks, so UD-253 to UD-263 do not apply; the direction and the speed are those of the prepared packet (UA-21, risk (i)); a first level with no hopping; no pointer, no arena, no reading |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3426,6 +3467,17 @@ transponder's Hamiltonian and the lower bounds of UD-253 to UD-263 do not carry 
 they stand. The choice of that band and of the transponder's window of momenta is the
 author's and needs a clause before any theorem. No new assumption here.
 
+Exact scope of UD-265 (BACKLOG #437; obligation UO-26; assumption UA-21). What it gives.
+The objects of UA-21 and their free motion: the first level rests exactly, and a state
+that the swap has put in the second level leaves at the group velocity of that level's
+band, within the tail of a flat packet. Item (1) of UO-26 holds for this transponder as
+it stood, because the first-level state is stationary. What it does not give. Item (2):
+that the meeting puts any weight in the second level. The swap does not commute with
+the blocks, each momentum of the packet has its own detuning, and the launched part
+moves while the carriers are in contact; none of that is treated. A receiver. The new
+assumption is UA-21, admitted on the author's "push and continue" and to be struck if
+that was not meant.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4966,6 +5018,10 @@ time. It is not a statement about every dynamics on `Σ`.
   transponder was prepared, and a pointer reading the second level elsewhere counts `0`
   on every fibre. A return to a distance needs a band for the second level (UA-19 (a),
   (d)), not yet in any statement.
+  ▸ **Twenty-second brick, 2026-11-26 (BACKLOG #437) → UA-21, UD-265.** A band for the
+  second level (the lattice Dirac one), the first level without hopping. The first level
+  rests; a swapped packet leaves at the band's group velocity; item (1) holds as it
+  stood. No launch is shown for this transponder.
 
 ---
 
