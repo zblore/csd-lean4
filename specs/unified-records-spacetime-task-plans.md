@@ -427,6 +427,9 @@ before the meeting).
    of the time of contact; (c) *band_launch_in_region*, its weight outside a region that
    holds the moving box for every launch time; (d) the reading by a pointer on that
    region, with the control of UD-264's kind.
+   What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
+   (2026-11-26): the time located within the reading time, both controls, and for
+   `d ≥ 2` a return that reaches `d + 1` receivers in general position.
 4. *echo_gate_reading*: a gate between the second level and an observer's clock, with a
    budget for a weight of order `g²`: the present gates need nearly full weight, so this
    needs either a strength that makes the launched weight of order one (beyond first

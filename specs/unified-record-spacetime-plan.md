@@ -24,6 +24,9 @@ in them is §7.
   **repackaging test**: the condition under which a theorem with that title would only restate an
   entry of Register 1.
 
+**The path through the registers** is §9: five links from the flow on `Σ` to an effective
+spacetime, the one path that is realised, and the first broken link of the next one.
+
 The identifiers `UA-`, `UD-`, `UO-` are local to this note. Posit numbers are those of
 [`POSITS.md`](POSITS.md) and residue identifiers those of [`residues.tsv`](residues.tsv); neither is
 renumbered or extended here.
@@ -5022,6 +5025,54 @@ time. It is not a statement about every dynamics on `Σ`.
   second level (the lattice Dirac one), the first level without hopping. The first level
   rests; a swapped packet leaves at the band's group velocity; item (1) holds as it
   stood. No launch is shown for this transponder.
+  ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
+  transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
+  the chart of §9.5 needs. No theorem.
+
+### The skeleton's obligations (§9, 2026-11-26)
+
+Named by §9. Each is a missing implication between two links there. None is met, and none
+has a Lean statement.
+
+* **UO-27. The same event, from records.** On the arena of UA-18 the relay reading of `A`
+  and the return reading of `B` concern one event because the energy has one messenger and
+  one gate for each reading, and the run has one relay. That is the preparation. Wanted: a
+  run with at least two encounters in which the assignment of each reading to an encounter
+  is a function of the records, and a theorem that it agrees with the encounters of the
+  flow. *Test:* a theorem in which every reading has its own carrier and its own gate, one
+  for each event, restates the preparation. So does one in which the observers' records
+  are compared at a lattice site named in the statement.
+* **UO-28. The clock's unit, the synchronisation and the relative velocity, from records.**
+  In UD-201 to UD-205 the unit `2π/R₀` is a number of the arena's parameters, and the
+  velocity of the comparison is `vRel` of the prepared momentum. Both are derived from the
+  band (UA-18 (f)) and neither is read. Wanted: the velocity from one observer's radar
+  readings of the other at two events; within a group of more than one observer, the
+  offsets of the clocks from radar between its members. *Test:* a theorem whose velocity is
+  a function of the prepared momentum, or whose clocks agree because the preparation
+  started them together in the frame in which they are then compared, restates UA-4.
+* **UO-29. The spatial chart of an encounter from records, for `d ≥ 2`.** The hypotheses
+  of `trilateration_chart_boostD` (§9.5), each within an error derived from the readings,
+  for a return that the encounter causes (UO-26), on one arena. This is the form that
+  BACKLOG #298 takes with UO-26; it includes the statement of that theorem with errors,
+  which `trilateration_stable` gives for the distances only. *Test:* UO-16's. A theorem
+  with a null messenger, with the observers' positions in their group, or with the group's
+  velocity among its hypotheses is UA-11 again.
+* **UO-30. A shared operational geometry.** Two groups of observers in relative motion
+  reconstruct one collection of encounters, in one run or in a family of runs from one
+  preparation family, and one transformation carries the first group's coordinates to the
+  second's on all the common events, within errors derived from the readings. More events
+  than fix the transformation, so that the rest test it: a Poincaré map of `d + 1`
+  dimensions has `(d + 1)(d + 2)/2` parameters and an event gives `d + 1` equations.
+  *Test:* with one event and a velocity that the arena supplies this is UD-201 to UD-205.
+* **UO-31. An effective flat spacetime along a family.** Along a family of experiments of
+  improving resolution, the charts of UO-30 stay compatible on a stated domain. To be
+  stated before it is proved: which data converge (the intervals between pairs of events,
+  and their order where the interval is timelike); the domain (the events whose returns
+  reach every observer inside the reading windows); what the limit keeps of the lattice
+  (the direction term of UD-207 at order `(a p)²`, the doublers, the reading windows in the
+  flow time) and of Register 1. *Test:* UO-18's. A limit in which the lattice scale is sent
+  to zero by a hypothesis is the continuum limit of UA-8 restated. Curvature and the
+  dynamics of gravity are not in this obligation.
 
 ---
 
@@ -5136,6 +5187,207 @@ Posit 1 and may not be reported as dynamical:
 
 Plans for the unfinished tasks of the plan of 2026-11-18:
 [`unified-records-spacetime-task-plans.md`](unified-records-spacetime-task-plans.md).
+
+---
+
+## 9. The skeleton from `Σ` to spacetime
+
+Written 2026-11-26 at the author's instruction, after an outside review of commit
+`c6330533`. No Lean and no new assumption. It orders what §§3 to 5 hold into five links,
+follows the one path through them that is realised, follows the encounter path to its
+first broken link, and names what is missing. The registers stay where they are. This
+section cites them.
+
+**Marks.** Each ingredient is marked **[A]** when the arena supplies it (the energy, its
+parameters, the preparation: Register 1), **[R]** when it is read from the records of one
+run (tick counts), and **[D]** when a named theorem derives it. An ingredient marked [A]
+that the programme's claim needs as [R] or [D] is a missing implication, and each has an
+obligation.
+
+### 9.1 The five links
+
+| Link | Physical input | Observable output | Strongest declaration | Missing implication |
+|---|---|---|---|---|
+| **L1.** Flow on `Σ` → a recorded event | One point of an arena and its Hamiltonian flow [A]; a pointer in its ready arc (UA-4) [A] | A tick count that differs between two reading times, and from the count with the interaction off [R] | Wall run: `wallRunAt_orbit`, `IsTickCount.exists_crossings`, UD-208. Encounter: `transponder_meeting_record_instance` with `transponder_reading_control_instance` (UD-261) | The encounter's record on fibres of positive measure (UD-261 is one fibre); UO-25 (3) to (7) |
+| **L2.** A recorded event → evidence of it at a distance | A carrier that leaves the event, and a receiver apart from it [A]; that it leaves because of the event [D wanted] | The receiver's count is `0` up to a stated time and at least `1` after it, and `0` with the contact term off [R] | An event at a wall: the return reading of `csd_operational_lorentz_from_records`. An event at a point: the obstruction `transponder_distant_reading_idle` (UD-264); on UA-21, `transponder_band_swapped_moves` and `transponder_band_launch_le` (UD-265) | UO-26 (2) and (3) for the transponder of UA-21, as R1 to R7 of §9.4 |
+| **L3.** Evidence → an observer's coordinates | Each observer's emission and return counts [R]; the clock's unit [A]; the limiting speed [A]; the observers' places in their group [A]; which readings belong to one event [A] | A time and a position of the event in each group's chart | `1 + 1`: `restEvent`, `movingEvent`. `d + 1`: `trilateration_chart_boostD`, `trilateration_stable`, kinematic (UA-11) | UO-27, UO-28, UO-29 |
+| **L4.** Coordinates → a shared operational geometry | Two groups' charts of the same events | One transformation between the charts on the common events, and equal intervals, within errors from the readings | `csd_operational_lorentz_from_records` (`WallRadarGeometry`): one event, two observers, the velocity [A] | UO-30 |
+| **L5.** Shared geometry → an effective spacetime | A family of experiments of improving resolution | Charts that stay compatible on a stated domain as the errors shrink | `tendsto_radar_error_relative`, `tendsto_radar_interval_error_relative`: one event, one velocity, one distance. `trilateration_scaling`: kinematic | UO-31 |
+
+### 9.2 Where four quantities first enter
+
+* **The spatial dimension** enters at L2. On a line a wall returns the whole messenger, and
+  one observer's two readings give the event's time and distance. For `d ≥ 2` the return
+  has to reach `d + 1` receivers that do not lie in one hyperplane, and a flat wall does
+  not do that for a moving group
+  ([`unified-m7-feasibility.md`](unified-m7-feasibility.md) §4). At L3 it enters as the
+  number of observers and as the constant `K` of `exists_trilateration_const`. L1 does not
+  see it: UD-261 is proved in two dimensions and its record is the same statement in any.
+* **The signal speed** enters at L2 as the band velocity of the carrier that returns, and
+  as the cone bound on anything arriving sooner (UD-230, UD-247) [D]. It enters L3 as a
+  convention: radar halves the round trip, which gives the event's time only when the two
+  legs have one speed. In the statements of L3 and L4 it is the literal `1` of
+  `lorentzBoost 1`, `radarInterval` and `minkowskiSqD` [A]. The messenger of the wall run
+  has rest energy `1/k`, and its defect from `1` is part of the error `151 K/k` [D]. For
+  `d ≥ 2` the speed depends on the direction at order `(a p)²` (UD-207), which no statement
+  of L3 yet carries.
+* **The observers' separation** enters at L3. In `1 + 1` it is the distance `π K`, the whole
+  chain [A]. For `d ≥ 2` it is `RadarGeneralPosition`, a hypothesis [A]. It is the scale of
+  every relative error at L4 and L5 (`radar_error_relative`).
+* **The clock's calibration** enters at L3, where a count becomes a time through the unit
+  `2π/R₀`. `R₀` is `ringRate` of the arena's parameters [A]. Both observers' counts are
+  turned into times with the same `R₀`, which uses that the two clocks are built alike
+  [A]. The moving clock's slower rate is not assumed: it is in the counts [R], and UD-138
+  derives it [D]. The origin of time is the two clocks' meeting reading [R]. Synchronising
+  several clocks of one group first matters for `d ≥ 2`, and nothing in Lean does it
+  (UO-28).
+
+### 9.3 The realised path: the wall run in `1 + 1`
+
+One arena: `PentaSigma`, three carriers on the walled chain and five gated pointers
+(UA-18).
+
+* **L1.** The run is one orbit of one Hamiltonian flow, which preserves `μ_FS ⊗ vol⁵`
+  (`wallRunAt_orbit`) [D]. A count is a number of passages of that orbit from a pointer's
+  ready arc to its display arc (`IsTickCount.exists_crossings`) [D]. The five counts are
+  recorded facts with measurable events (UD-208) and a history with a compatible region of
+  non-zero measure (UD-219) [D]. Supplied: the three packets, the gates' width, the
+  profiles, the strengths, which exist and have no formula, and the pointers' start in a
+  box of radius `1/(12000 k²)` [A].
+* **L2.** The event is the messenger's turn at the far wall, where `A` rests. `A` records
+  it where it happens: its relay pointer stops ticking when the messenger arrives [R]. `B`
+  has evidence of it at a distance: its return pointer's gate closes when the messenger is
+  back [R]. The carrier that returns is the messenger, and the wall turns it [A]. The wall
+  would turn it with `A` absent, so `B`'s reading is evidence of the turn at the wall. It
+  is evidence of the encounter with `A` because the preparation puts `A` beside that wall.
+* **L3.** `restEvent R₀ N_ρ N_m` is `A`'s time of the relay less its meeting reading, at its
+  own place. `movingEvent R₀ N_e N_r N_μ` is `B`'s radar time and radar distance of the
+  same event less its meeting reading. Both are definitions on five counts [R] and the
+  unit [A].
+* **L4.** `csd_operational_lorentz_from_records`: for every `k ≥ 100`, from every start in
+  an open set of pointer angles, the boost by `v = vRel 1 1 (1/2)` of `A`'s coordinates is
+  within `151 K/k` of `B`'s, component by component, and the two intervals differ by at
+  most `4600 K²/k` [D]. `A`'s time is within `52 K/k` of the kinematic time `πK − πK/v` of
+  the lattice's own description [D]: the reconstruction is checked against the encounter
+  that the arena holds, and that encounter is not an input of the coordinates. `v` is the
+  band velocity of `B`'s packet [A].
+* **L5.** The relative errors `151/(π k)` and `4600/(π² k)` tend to `0` along the family
+  (`tendsto_radar_error_relative`, `tendsto_radar_interval_error_relative`) [D]. Every
+  member of the family has one event, the same velocity and the same distance.
+
+What the path does not do, link by link. L2: the return is not caused by the encounter.
+L3: the two observers' readings belong to one event by the preparation (UO-27), and the
+unit and the velocity are the arena's (UO-28). L4: one event (UO-30). L5: no domain and no
+second chart (UO-31). All reading windows are in the flow time (UA-7). By §1 the whole
+path is an operational reconstruction of the kinematics that UA-8 was chosen to have.
+
+### 9.4 The encounter path, to its first broken link
+
+One arena: the composite of a messenger and a transponder, with one pointer (UA-19,
+UA-21).
+
+* **L1, realised.** `transponder_meeting_record_instance` (UD-261): the pointer coupled to
+  the transponder's second level counts `0` at the flow time `M/12` and at least `1` at
+  `11M/5` [D]. `transponder_reading_control_instance`: without the contact term it counts
+  `0` at `11M/5` [D]. The record is written by the accumulated occupancy of the second
+  level, as the author decided on 2026-11-25. Supplied: the two packets, the contact
+  region, the strength `3/(5M)`, the rate, one fibre [A]. The count is not computed, and
+  the two levels have one energy.
+* **L2, broken.** `transponder_site_conserved`: with no hopping the whole energy, contact
+  term included, keeps the transponder on the sites where it was prepared.
+  `transponder_distant_reading_idle`: a pointer reading the second level on any other
+  sites counts `0` on every fibre. So no receiver at a distance has evidence of this
+  encounter. This is the first broken link of the path. With the band of UA-21:
+  `transponder_band_launch_le` (nothing in the second level before the meeting, within a
+  stated error) and `transponder_band_swapped_moves` (a swapped packet leaves at the band's
+  group velocity, within the packet's tail). Neither has both the contact term and the
+  motion: that the meeting swaps anything is not shown.
+* **L3 to L5.** Nothing. This arena has no clock and no observer.
+
+**What the receiver has to deliver.** For L3 to start from an encounter, L2 owes one
+theorem with these parts. They are UO-26 (2) and (3), restated from what §9.5 needs.
+
+* **R1. One run.** The messenger, the transponder of UA-21 and a pointer coupled to the
+  second level on a region `B` that holds none of the sites where the transponder is
+  prepared, on one arena.
+* **R2. Not before.** The count is `0` at a flow time `t₁`, from every ready start and on
+  every fibre. `t₁` is to be later than the meeting, so that the bound says the evidence
+  does not outrun the return.
+* **R3. After.** The count is at least `1` at `t₂`, on a stated set of fibres. A set of
+  positive measure is the aim; one fibre is a step.
+* **R4. Two controls.** With the contact term off the count at `t₂` is `0` (the control of
+  UD-261). With the second level's hopping off it is `0` (UD-264, which is already this).
+* **R5. The time is located.** `t₁` and `t₂` are the time of the meeting plus the distance
+  to `B` over the band's group velocity, within a stated `δ`. A record written by
+  accumulation shows only after the occupancy has been summed up to the threshold, so `δ`
+  is at least that reading time. `δ` is the error of the distance at L3: it is the `δ i`
+  of `trilateration_stable`.
+* **R6. For `d ≥ 2`, `d + 1` receivers.** R2 to R5 for receivers in general position in
+  one run. The return then has to reach each of them.
+* **R7. A clock reads it.** The reading is a count of a clock at the receiver, gated by the
+  return's arrival as in UA-18 (e). A flow time in a hypothesis is not a reading (UA-7).
+
+R6 bears on UA-21. A return prepared about one momentum `k₀'` travels along one line, and
+`d + 1` receivers in general position do not lie on a line. So the chart of §9.5 needs a
+return that spreads, or a transponder prepared with several directions, each receiver
+then getting a part of the weight. This is risk (i) of UA-21 seen from L3, and it is the
+author's to settle.
+
+### 9.5 `2 + 1` and `3 + 1`: what records would have to supply
+
+`trilateration_chart_boostD` is exact kinematics in any finite dimension (UA-11). Its
+hypotheses, and where each would have to come from:
+
+| Hypothesis | What it says | Now | From records it needs |
+|---|---|---|---|
+| `hn`, `hv` | The group moves in the unit direction `n` at speed `|v| < 1` | [A]: the momenta of the observers' packets | The velocity from radar between the groups (UO-28) |
+| `hG` | A base observer at `o` and others at `p i` whose displacements span space: `d + 1` observers | [A]: where the packets are prepared | The distances between the members of a group from radar among them; the constant `K` from those distances (UO-29) |
+| `ha₀`, `hb₀`, `ha`, `hb` | Each observer's emission and return lie on its worldline, at a fixed place of the group's frame, at its clock readings `τe`, `τr` | [D] in part: a packet stays in the box moving at its group velocity (UD-221, UD-222); a clock on a packet runs at the dilated rate within stated errors (UD-235, UD-238) | The readings as counts of gated clocks (R7); the clocks' offsets synchronous in the group's own frame, which clocks started together in the lattice's frame are not (UO-28) |
+| `hae`, `hae'` | The messenger runs future null from each emission to the event | [D] as a bound: `|v_g| ≤ c`, a defect from the rest energy, the direction term (UD-207) | The same with its error carried into the conclusion (UO-29) |
+| `heb`, `heb'` | A signal runs future null from the event to each return | Missing: UO-26 | R1 to R7, with the band velocity of the second level in place of `1` |
+| one `e` in every hypothesis | Every observer's readings are of the same event | [A] | UO-27 |
+
+Two forms of the experiment meet these hypotheses, and they ask different things of L2.
+
+* **Every observer runs radar.** The theorem as it stands: `d + 1` messengers, one from
+  each observer, reach one event, and a return goes back to each. With one transponder the
+  messengers meet it at different times unless the preparation times them, and each
+  meeting is then its own event.
+* **One observer runs radar and the others receive.** One messenger and one encounter. The
+  emitter's two readings give the event's time and its distance from the emitter. Each
+  other observer's reception reading, less that time, gives its distance, if its clock is
+  synchronous with the emitter's. `trilateration_unique` then fixes the position. This
+  needs UO-28's synchronisation and a short kinematic lemma that the corpus does not have.
+  It is the form that fits UA-19.
+
+Each witness is to be on one arena: the carriers, the transponder, `d + 1` clocks and
+their pointers in one energy, with one flow. On the fibres where the profiles vanish the
+observers' runs are a product (`coincFlow`). Joining `m` carriers and `m` pointers in one
+arena is owed ([`unified-m7-feasibility.md`](unified-m7-feasibility.md) §2, §6).
+
+### 9.6 What would count
+
+Shared spacetime is reconstructed from records, in this note's sense, by a theorem with
+all of the following.
+
+1. One arena and one Hamiltonian flow, and the readings are tick counts of that flow (L1).
+2. Each event is an encounter, and each observer's evidence of it reaches that observer by
+   a carrier that the encounter launches, with both controls of R4 (L2).
+3. The coordinates are functions of the counts. What is still [A] is listed in the
+   statement: the energy, the preparation and the reading windows. The unit, the offsets
+   and the velocity are [R] or [D] (L3, UO-28).
+4. Which readings belong to which event is a function of the counts (UO-27).
+5. Two groups, more events than fix the transformation, and one transformation on all of
+   them within errors derived from the readings (L4, UO-30).
+6. The lattice's own coordinates of the encounters appear only in a comparison, as the
+   kinematic time does in `WallRadarGeometry`. They are a check on the reconstruction and
+   not an input to it.
+7. The errors tend to zero along an instantiated family, on a stated domain (L5, UO-31).
+
+The wall run meets 1, 6 and, for one event, 7. It meets 3 except for the unit and the
+velocity. It does not meet 2, 4 or 5. The encounter path meets 1 and the half of 2 that is
+local. By §1 a theorem meeting all seven is still an operational reconstruction from UA-8.
+Which assumptions force the geometry is M8.
 
 References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#408~~ (the carriers on the walled chain), ~~#409~~ (the walled chain with numbers), ~~#410~~ (the chain's coincidence relation), ~~#411~~ (the wall gate for wall states), ~~#412~~ (the four times), ~~#413~~ (a fast messenger), ~~#414~~ (the gates' flow times), ~~#415~~ (the tolerance test for one gate), ~~#416~~ (the odd sector as a chain), ~~#417~~ (the observer at the far wall), ~~#418~~ (event times; the rate relation), ~~#419~~ (histories from where the carriers are), ~~#420~~ (the moving observer's two histories), ~~#421~~ (the relay history), ~~#422~~ (the meeting histories), ~~#423~~ (one run on the walled chain), ~~#424~~ (the seven gate intervals), ~~#425~~ (the family's conditions), ~~#426~~ (the family's run), ~~#427~~ (stability of histories), ~~#428~~ (the run on any fibre and its drift), ~~#429~~ (the top-down theorem from any pointer angles), ~~#430~~ (the walled chain from an open set of pointer angles), ~~#431~~ (the plan's theorem for the family), ~~#432~~ (radar coordinates, the interval, the bridge and the audit), ~~#433~~ (the interval's residual), ~~#434~~ (the interval's lower bound; UO-16 marked), ~~#435~~ (an explicit radius), ~~#294~~ (the lattice Dirac Hamiltonian in `d` dimensions), ~~#295~~ (the lattice's preferred directions), ~~#436~~ (tick counts as recorded facts), #296 (packets in `d` dimensions, first part), #437 (a return caused at the event), ~~#438~~ (a preparation for the five-record history), #439 (the macroscopic projection of the radar records), #440 (a record that controls a second apparatus), #441 (the Born bridge for tick records), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
