@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-268; UA-21 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-269; UA-21 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -446,6 +446,14 @@ before the meeting).
    them under UD-267's integral for the flat messenger packet (the reference orbit is
    UD-262's, so UD-263's bounds are the model); then `‖(H₁ − E 1) χ‖` for a flat packet
    from the window's energies; then the free motion after the contact.
+   The join is done for an abstract messenger (2026-11-26,
+   `RecordLayer/TransponderBandContact.lean`, UD-269):
+   `transponder_band_contact_second_level`. Next, against R1 to R7 of the contract's
+   §9.4: (i) the flat Dirac packet and its moving box for the hypotheses on the
+   messenger, and `‖(H₁ − E 1) χ‖` from the window; (ii) the run that starts apart, in
+   two stages; (iii) after the contact, the launched part as `χ` in the second level
+   within `κ t`, then `transponder_band_swapped_moves` to a receiver's region (R1, R5);
+   (iv) the receiver's pointer, with both controls (R2 to R4, R7).
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

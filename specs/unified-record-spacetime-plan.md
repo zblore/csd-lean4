@@ -1536,6 +1536,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-266 | **The transponder of UA-21 with the swap ungated: each mode of the band turns on its own (UO-26, item (2), a step).** The swap is the identity on the sites, so for an eigenvector `u` of the second level's Hamiltonian, eigenvalue `E₁`, the transponder's Hamiltonian with the term `g X` keeps the plane of "`u` in the first level" and "`u` in the second", and is there the transponder of UD-262 with level energies `E₀`, `E₁`. With `Ω² = g² + ((E₁ − E₀)/2)²`, `Ω > 0`, the orbit of `u` in the first level is `e^{−i(E₀+E₁)s/2} ((cos Ωs + i (δ/Ω) sin Ωs) u₀ − i (g/Ω) sin Ωs · u₁)`; the second level holds exactly `(g/Ω)² sin² (Ωs)` of the mode's weight; for a sum of modes the launched wave function is the same sum with each amplitude multiplied by `−i e^{−i(E₀+E_m)s/2} (g/Ω_m) sin (Ω_m s)` | `exp_mulVec_eq_of_agree_on_pair`, `exp_smul_mulVec_eq_of_agree_on_pair`, `levelSwap_mulVec_inLevel_one`, `levelProj_mulVec_inLevel_same`, `levelProj_mulVec_inLevel_of_ne`, `blockDiagonal_smul_one_mulVec_inLevel`, `detunedAxis_mulVec_inLevel_zero`, `exp_levels_swap_mulVec_inLevel_zero`, `exp_bandContact_mulVec_inLevel_zero`, `levelProj_one_mulVec_exp_bandContact`, `sum_norm_sq_levelProj_one_exp_bandContact`, `levelProj_one_mulVec_exp_bandContact_sum` (`RecordLayer/TransponderBandRabi.lean`) | **no gate and no messenger**: the swap acts at all times and at every site, so no launch by a meeting is shown; exact for one mode, and for a sum of modes only the wave function, not its weight; `Ω > 0` for each mode is a hypothesis; any Hermitian or non-Hermitian `H₁` with the stated eigenvectors, the lattice Dirac band not substituted |
 | UD-267 | **The gated contact term against the ungated one, for any transponder (UO-26, item (2), a step).** `M₀`, `C`, `Y` Hermitian, `Y² = 1`, `Y` with no entry between different sites of the second carrier. For `t ≥ 0` the orbit of `X` under `compositeH M₀ C + g · gateOp σ τ r Y` is its orbit under `compositeH M₀ (C + g Y)` within `|g| ∫₀ᵗ ‖P' e^{−is · compositeH M₀ (C + gY)} X‖ ds`, `P'` the projector on the configurations where the carriers are not in the relation; the same for the norm of any part `Q`, `‖Q‖ ≤ 1`; for the transponder of UA-21 and `Q` the second level | `compositeH_add_smul`, `norm_exp_gated_sub_ungated_mul_le`, `abs_norm_mul_gated_sub_ungated_le`, `transponder_band_gated_second_level` (`RecordLayer/TransponderBandGate.lean`) | **the integral is not evaluated**: it is the amplitude apart along the *ungated* orbit, on which the launched part moves, and no packet is put in; so no launch by a meeting is shown; contact from the flow time `0`; `Y` need not commute with `C`, which is what UD-258 and UD-262 required |
 | UD-268 | **The band against one energy for the second level: the spread of energies times the time (UO-26, item (2), a step).** The transponder of UA-21 with the swap ungated, first-level energy `E 0`, Hermitian `H₁`; `Ω > 0`, `Ω² = g² + ((E 1 − E 0)/2)²`. For `χ` of norm `1` and `s ≥ 0`, the orbit of `χ` in the first level differs from its orbit under the level energies `E` with no hopping (UD-262's transponder, which stays where `χ` is) by at most `(|g|/Ω) ‖(H₁ − E 1) χ‖ s` in the Euclidean norm. For a product with a messenger, the difference of two composite orbits that differ in the second carrier's Hamiltonian has squared norm the messenger's times the second carrier's | `bandDefect`, `bandBlocks_eq_add_bandDefect`, `bandDefect_isHermitian`, `blockDiagonal_bandDefect_mulVec_inLevel_zero`, `blockDiagonal_bandDefect_mulVec_inLevel_one`, `norm_neg_exp_mul_I_sin_mul`, `sqrt_sum_norm_sq_bandDefect_levels_orbit_le`, `sqrt_sum_norm_sq_exp_band_sub_levels_le`, `sum_norm_sq_exp_compositeH_sub_prod` (`RecordLayer/TransponderBandFlat.lean`) | **a short-time bound**: linear in `s`, empty once `‖(H₁ − E 1) χ‖ s` is of order one, that is once the launched part has moved by the packet's own width, so it places the transponder during the contact and does not show the return leaving; `‖(H₁ − E 1) χ‖` not evaluated for the lattice Dirac band; no gate and no messenger in the main statement; not yet put under the integral of UD-267 |
+| UD-269 | **What the contact launches from the transponder of UA-21 (UO-26, item (2), met with conditions; link L2 of §9).** A messenger `ψ` of norm `1` with any Hermitian Hamiltonian; the transponder with first-level energy `E 0` and Hermitian `H₁`, started in its first level with `χ` of norm `1` on the sites `B`; the contact term of UA-19 (b). `Ω > 0`, `Ω² = g² + ((E 1 − E 0)/2)²`, `κ = (|g|/Ω) ‖(H₁ − E 1) χ‖`. If at every flow time `s` of `[0, t]` every site of `A s` is in contact with every site of `B` and the messenger's orbit has weight at most `ε` off `A s`, the part of the state at `t` with the transponder in its second level has Euclidean norm within `|g| (√ε + κ t) t + κ t` of `(|g|/Ω) |sin (Ω t)|` | `sum_norm_sq_exp_skew_mulVec`, `norm_mul_mul_le_add_of_norm_le_one`, `abs_norm_mul_mul_sub_le_of_norm_le_one`, `one_kronecker_mulVec_prod`, `sum_norm_sq_prod_inLevel_zero`, `levels_add_swap_isHermitian`, `norm_exp_band_sub_levels_mul_prod_le`, `norm_coincProj_levels_orbit_mul_prod_le`, `norm_levelProj_one_levels_orbit_mul_prod`, `transponder_band_contact_second_level` (`RecordLayer/TransponderBandContact.lean`) | **the conditions**: contact from the flow time `0`, so the launch is not shown to follow a meeting in the same run; the sets `A s` and `ε` are hypotheses, the lattice Dirac packet and its box not substituted; `‖(H₁ − E 1) χ‖` not evaluated; a short contact only (`κ t` small), in which the amplitude is at most `|g| t`; no instance; the amplitude in the second level, not a return that travels |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3531,6 +3532,17 @@ largest `|E(k) − E 1|` over the window; any regime in which the contact lasts 
 than the packet takes to cross its own width, where the two dressed branches of the
 band separate and a tail bound for them is needed. No new assumption.
 
+Exact scope of UD-269 (BACKLOG #437; obligation UO-26; assumptions UA-19, UA-21; link L2
+of §9). What it gives. UD-266, UD-267 and UD-268 joined: the first statement that contact
+with a messenger puts a stated amplitude in the second level of the transponder that
+can then travel, with every error explicit. With `g = 0` the same statement gives `0`,
+which is the first control of R4. What it does not give. A run that starts apart (the
+two-stage form of UD-263 is the model, and `transponder_band_launch_le` is its first
+stage). The hypotheses met by a packet. The motion after the contact, where the
+launched part is `χ` in the second level to within `κ t` and then moves as
+`transponder_band_swapped_moves` says. A receiver: R1 to R3 and R5 to R7 of §9.4 are
+untouched. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5086,6 +5098,11 @@ time. It is not a statement about every dynamics on `Σ`.
   banded transponder is the two-level one of UD-262 within `(|g|/Ω) ‖(H₁ − E 1) χ‖ s`: a
   short-time bound that places the transponder during the contact. Not yet joined to
   UD-267.
+  ▸ **Twenty-sixth brick, 2026-11-26 (BACKLOG #437) → UD-269. (2) met for UA-21, with
+  conditions.** While the messenger is in contact, the second level's amplitude is
+  `(|g|/Ω) |sin Ωt|` within `|g| (√ε + κ t) t + κ t`. Conditions: contact from the flow
+  time `0`; the messenger's place a hypothesis; a short contact; no instance. Not a
+  return that travels.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5270,7 +5287,7 @@ obligation.
 | Link | Physical input | Observable output | Strongest declaration | Missing implication |
 |---|---|---|---|---|
 | **L1.** Flow on `Σ` → a recorded event | One point of an arena and its Hamiltonian flow [A]; a pointer in its ready arc (UA-4) [A] | A tick count that differs between two reading times, and from the count with the interaction off [R] | Wall run: `wallRunAt_orbit`, `IsTickCount.exists_crossings`, UD-208. Encounter: `transponder_meeting_record_instance` with `transponder_reading_control_instance` (UD-261) | The encounter's record on fibres of positive measure (UD-261 is one fibre); UO-25 (3) to (7) |
-| **L2.** A recorded event → evidence of it at a distance | A carrier that leaves the event, and a receiver apart from it [A]; that it leaves because of the event [D wanted] | The receiver's count is `0` up to a stated time and at least `1` after it, and `0` with the contact term off [R] | An event at a wall: the return reading of `csd_operational_lorentz_from_records`. An event at a point: the obstruction `transponder_distant_reading_idle` (UD-264); on UA-21, `transponder_band_swapped_moves` and `transponder_band_launch_le` (UD-265) | UO-26 (2) and (3) for the transponder of UA-21, as R1 to R7 of §9.4 |
+| **L2.** A recorded event → evidence of it at a distance | A carrier that leaves the event, and a receiver apart from it [A]; that it leaves because of the event [D wanted] | The receiver's count is `0` up to a stated time and at least `1` after it, and `0` with the contact term off [R] | An event at a wall: the return reading of `csd_operational_lorentz_from_records`. An event at a point: the obstruction `transponder_distant_reading_idle` (UD-264); on UA-21, `transponder_band_swapped_moves` and `transponder_band_launch_le` (UD-265) | UO-26 (3) for the transponder of UA-21, as R1 to R7 of §9.4; (2) is met with conditions since UD-269 (contact from the flow time `0`, no instance) |
 | **L3.** Evidence → an observer's coordinates | Each observer's emission and return counts [R]; the clock's unit [A]; the limiting speed [A]; the observers' places in their group [A]; which readings belong to one event [A] | A time and a position of the event in each group's chart | `1 + 1`: `restEvent`, `movingEvent`. `d + 1`: `trilateration_chart_boostD`, `trilateration_stable`, kinematic (UA-11) | UO-27, UO-28, UO-29 |
 | **L4.** Coordinates → a shared operational geometry | Two groups' charts of the same events | One transformation between the charts on the common events, and equal intervals, within errors from the readings | `csd_operational_lorentz_from_records` (`WallRadarGeometry`): one event, two observers, the velocity [A] | UO-30 |
 | **L5.** Shared geometry → an effective spacetime | A family of experiments of improving resolution | Charts that stay compatible on a stated domain as the errors shrink | `tendsto_radar_error_relative`, `tendsto_radar_interval_error_relative`: one event, one velocity, one distance. `trilateration_scaling`: kinematic | UO-31 |
@@ -5363,6 +5380,12 @@ UA-21).
   stated error) and `transponder_band_swapped_moves` (a swapped packet leaves at the band's
   group velocity, within the packet's tail). Neither has both the contact term and the
   motion: that the meeting swaps anything is not shown.
+  *Since 2026-11-26 (UD-266 to UD-269).* That a contact swaps something is shown:
+  `transponder_band_contact_second_level`, the second level's amplitude is
+  `(|g|/Ω) |sin Ωt|` within explicit errors while the messenger is in contact. The link
+  is still broken, further on: the contact starts at the flow time `0` and not after a
+  meeting, the launched part is not followed after the contact, and there is no
+  receiver. Of R1 to R7 only the first control of R4 is in hand (`g = 0` gives `0`).
 * **L3 to L5.** Nothing. This arena has no clock and no observer.
 
 **What the receiver has to deliver.** For L3 to start from an encounter, L2 owes one

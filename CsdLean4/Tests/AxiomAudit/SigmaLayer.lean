@@ -24324,4 +24324,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sum_norm_sq_exp_compositeH_sub_prod
 
+/-! #437, UO-26: what the contact launches from the transponder of UA-21 (`RecordLayer/TransponderBandContact.lean`). -/
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_exp_skew_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_exp_skew_mulVec
+
+/-- info: 'CSD.RecordLayer.norm_mul_mul_le_add_of_norm_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_mul_mul_le_add_of_norm_le_one
+
+/-- info: 'CSD.RecordLayer.abs_norm_mul_mul_sub_le_of_norm_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_norm_mul_mul_sub_le_of_norm_le_one
+
+/-- info: 'CSD.RecordLayer.one_kronecker_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_mulVec_prod
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_prod_inLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_prod_inLevel_zero
+
+/-- info: 'CSD.RecordLayer.levels_add_swap_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levels_add_swap_isHermitian
+
+/-- info: 'CSD.RecordLayer.norm_exp_band_sub_levels_mul_prod_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_band_sub_levels_mul_prod_le
+
+/-- info: 'CSD.RecordLayer.norm_coincProj_levels_orbit_mul_prod_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_coincProj_levels_orbit_mul_prod_le
+
+/-- info: 'CSD.RecordLayer.norm_levelProj_one_levels_orbit_mul_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_levelProj_one_levels_orbit_mul_prod
+
+/-- info: 'CSD.RecordLayer.transponder_band_contact_second_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_band_contact_second_level
+
 end CSD.Tests.AxiomAudit
