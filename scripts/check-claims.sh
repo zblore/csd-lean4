@@ -1040,7 +1040,14 @@ isSymplectic"
 #   hamiltonianFlow_controlledEnergy_of_lift_eq_zero is its closed form on the fibres g(psi_2) = 0,
 #   from hamiltonianFlow_coupledEnergy — EARNED, on those fibres only;
 #   map_hamiltonianFlow_controlledEnergy is a measure statement about that flow, from
-#   kMuL_map_hamiltonianFlow for every smooth energy on the arena — no closed form claimed.)
+#   kMuL_map_hamiltonianFlow for every smooth energy on the arena — no closed form claimed;
+#   #437 LF4/ReleasedFlow.lean (UA-22): isHamiltonianVectorField_releaseTerm, _controlObs and
+#   _released prove iota_X omega = dH on the arena for b(theta_1) * (-2<C>) and for the whole
+#   energy, by the argument of isHamiltonianVectorField_coupledTerm — EARNED;
+#   hamiltonianFlow_released is the closed form of that energy's flow from a point where <C> = 0,
+#   for C commuting with A and B, by an explicit integral curve and uniqueness — EARNED, at
+#   those points only; schrodingerHamiltonian_mul_smul_of_commute and _mul_smul_self say that
+#   -2<B> and -2<C> are unchanged by commuting unitaries — statements about expectations.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1242,6 +1249,12 @@ hamiltonianFlow_stepEnergy_shiftMoving_fst
 hamiltonianFlow_controlledEnergy
 hamiltonianFlow_controlledEnergy_of_lift_eq_zero
 map_hamiltonianFlow_controlledEnergy
+isHamiltonianVectorField_releaseTerm
+isHamiltonianVectorField_controlObs
+isHamiltonianVectorField_released
+hamiltonianFlow_released
+schrodingerHamiltonian_mul_smul_of_commute
+schrodingerHamiltonian_mul_smul_self
 schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le

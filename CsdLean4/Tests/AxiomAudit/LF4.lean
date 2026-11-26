@@ -2378,4 +2378,90 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.map_hamiltonianFlow_controlledEnergy
 
+/-! #437, UA-22: a carrier released by a pointer's angle, the flow where the released observable vanishes (`LF4/ReleasedFlow.lean`). -/
+
+/-- info: 'CSD.LF4.schrodingerUnitary_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerUnitary_val
+
+/-- info: 'CSD.LF4.mul_schrodingerUnitary_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.mul_schrodingerUnitary_of_commute
+
+/-- info: 'CSD.LF4.schrodingerUnitary_mul_comm_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerUnitary_mul_comm_of_commute
+
+/-- info: 'CSD.LF4.continuous_schrodingerUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_schrodingerUnitary
+
+/-- info: 'CSD.LF4.hasDerivAt_schrodingerUnitary_mul_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasDerivAt_schrodingerUnitary_mul_clock
+
+/-- info: 'CSD.LF4.hasMFDerivAt_torusWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasMFDerivAt_torusWindow
+
+/-- info: 'CSD.LF4.releaseField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.releaseField
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_releaseTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_releaseTerm
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_controlObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_controlObs
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_released' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_released
+
+/-- info: 'CSD.LF4.schrodingerHamiltonian_mul_smul_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerHamiltonian_mul_smul_of_commute
+
+/-- info: 'CSD.LF4.schrodingerHamiltonian_mul_smul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerHamiltonian_mul_smul_self
+
+/-- info: 'CSD.LF4.releasedAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.releasedAngle
+
+/-- info: 'CSD.LF4.hasDerivAt_releasedAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasDerivAt_releasedAngle
+
+/-- info: 'CSD.LF4.continuous_releasedAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_releasedAngle
+
+/-- info: 'CSD.LF4.releasedClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.releasedClock
+
+/-- info: 'CSD.LF4.hasDerivAt_releasedClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasDerivAt_releasedClock
+
+/-- info: 'CSD.LF4.releasedCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.releasedCurve
+
+/-- info: 'CSD.LF4.mul_coupledMatrix_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.mul_coupledMatrix_of_commute
+
+/-- info: 'CSD.LF4.isMIntegralCurve_releasedCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isMIntegralCurve_releasedCurve
+
+/-- info: 'CSD.LF4.hamiltonianFlow_released' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_released
+
 end CSD.Tests.AxiomAudit

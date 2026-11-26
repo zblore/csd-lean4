@@ -801,7 +801,7 @@ what would discharge or constrain it.
   both. (iv) A first level with no hopping is a carrier of infinite mass: an idealisation,
   and the reason "at rest" is exact.
 
-### UA-22 — a return released by the record of the event (admitted 2026-11-26; nothing of it exists in Lean)
+### UA-22 — a return released by the record of the event (admitted 2026-11-26; its flow is `LF4/ReleasedFlow.lean`, UD-271)
 
 * **Assumed.** Obligation UO-26; link L2 of §9. The author's sentence (2026-11-26):
   "records are fixed measurements which then another measurement is made make another
@@ -824,13 +824,15 @@ what would discharge or constrain it.
   (e) *What may not be assumed.* That the event's pointer displays; the time of the
   release; the speed of the return, which is the band's group velocity times `g(ψ₂) b(θ₁)`
   and so depends on a fibre.
-* **Where.** Nothing. The engine: `controlledEnergy`, `hamiltonianFlow_controlledEnergy`
-  (`LF4/ControlledStep.lean`, UD-233), which off the fibres `g(ψ₂) = 0` names the base's
-  flow and does not solve it.
+* **Where.** `LF4/ReleasedFlow.lean` (`hamiltonianFlow_released`, UD-271, 2026-11-26):
+  the base's flow with the term, exact where `⟨K⟩ = 0`, for any three matrices that
+  commute as (c) needs; no return carrier is put in. Its tool:
+  `Projectivization.hasMFDerivAt_unitaryCurve_smul` (UD-270). The engine for the next
+  pointer: `hamiltonianFlow_controlledEnergy` (`LF4/ControlledStep.lean`, UD-233).
 * **Standing.** A choice of mechanism for UO-26, beside UA-19 and UA-21, which stay as they
   are with their theorems. By the charter a record is the ontic selection in the fibre, and
   a later interaction may depend on it (UO-24). The author has not read the clause.
-* **An argument on paper, not in Lean; it is the first thing to prove.** If `K` commutes
+* **The argument, proved since UD-271.** If `K` commutes
   with the matrices of every other term, `⟨K⟩` is conserved, and the carriers' unitary is
   the one without the release times `e^{−i c B(t) K}`, `c = g(ψ₂)`,
   `B(t) = ∫₀ᵗ b(θ₁(u)) du`. So the occupancy that drives the event's pointer is unchanged,
@@ -1589,6 +1591,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-268 | **The band against one energy for the second level: the spread of energies times the time (UO-26, item (2), a step).** The transponder of UA-21 with the swap ungated, first-level energy `E 0`, Hermitian `H₁`; `Ω > 0`, `Ω² = g² + ((E 1 − E 0)/2)²`. For `χ` of norm `1` and `s ≥ 0`, the orbit of `χ` in the first level differs from its orbit under the level energies `E` with no hopping (UD-262's transponder, which stays where `χ` is) by at most `(|g|/Ω) ‖(H₁ − E 1) χ‖ s` in the Euclidean norm. For a product with a messenger, the difference of two composite orbits that differ in the second carrier's Hamiltonian has squared norm the messenger's times the second carrier's | `bandDefect`, `bandBlocks_eq_add_bandDefect`, `bandDefect_isHermitian`, `blockDiagonal_bandDefect_mulVec_inLevel_zero`, `blockDiagonal_bandDefect_mulVec_inLevel_one`, `norm_neg_exp_mul_I_sin_mul`, `sqrt_sum_norm_sq_bandDefect_levels_orbit_le`, `sqrt_sum_norm_sq_exp_band_sub_levels_le`, `sum_norm_sq_exp_compositeH_sub_prod` (`RecordLayer/TransponderBandFlat.lean`) | **a short-time bound**: linear in `s`, empty once `‖(H₁ − E 1) χ‖ s` is of order one, that is once the launched part has moved by the packet's own width, so it places the transponder during the contact and does not show the return leaving; `‖(H₁ − E 1) χ‖` not evaluated for the lattice Dirac band; no gate and no messenger in the main statement; not yet put under the integral of UD-267 |
 | UD-269 | **What the contact launches from the transponder of UA-21 (UO-26, item (2), met with conditions; link L2 of §9).** A messenger `ψ` of norm `1` with any Hermitian Hamiltonian; the transponder with first-level energy `E 0` and Hermitian `H₁`, started in its first level with `χ` of norm `1` on the sites `B`; the contact term of UA-19 (b). `Ω > 0`, `Ω² = g² + ((E 1 − E 0)/2)²`, `κ = (|g|/Ω) ‖(H₁ − E 1) χ‖`. If at every flow time `s` of `[0, t]` every site of `A s` is in contact with every site of `B` and the messenger's orbit has weight at most `ε` off `A s`, the part of the state at `t` with the transponder in its second level has Euclidean norm within `|g| (√ε + κ t) t + κ t` of `(|g|/Ω) |sin (Ω t)|` | `sum_norm_sq_exp_skew_mulVec`, `norm_mul_mul_le_add_of_norm_le_one`, `abs_norm_mul_mul_sub_le_of_norm_le_one`, `one_kronecker_mulVec_prod`, `sum_norm_sq_prod_inLevel_zero`, `levels_add_swap_isHermitian`, `norm_exp_band_sub_levels_mul_prod_le`, `norm_coincProj_levels_orbit_mul_prod_le`, `norm_levelProj_one_levels_orbit_mul_prod`, `transponder_band_contact_second_level` (`RecordLayer/TransponderBandContact.lean`) | **the conditions**: contact from the flow time `0`, so the launch is not shown to follow a meeting in the same run; the sets `A s` and `ε` are hypotheses, the lattice Dirac packet and its box not substituted; `‖(H₁ − E 1) χ‖` not evaluated; a short contact only (`κ t` small), in which the amplitude is at most `|g| t`; no instance; the amplitude in the second level, not a return that travels |
 | UD-270 | **The orbit of a unitary curve on `ℂℙⁿ` has a Schrödinger field for its velocity (a tool for UA-22; UO-24, UO-26).** For a continuous curve `W` of unitaries whose matrix has the derivative `(−i K) W(t)` at `t`, the orbit `s ↦ W s • p` has the manifold derivative `schrodingerField K (W t • p)` at `t`. `K` may change with `t`, so a product of commuting one-parameter groups run with different clocks is covered | `Projectivization.hasDerivAt_chartFun_unitaryCurve_smul_chartInv`, `Projectivization.hasMFDerivAt_unitaryCurve_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceUnitaryCurve.lean`) | a derivative at one time on `ℂℙⁿ` alone: no arena, no pointer, no flow and no uniqueness; the flow of UA-22's release is not built on it yet |
+| UD-271 | **A carrier released by a pointer's angle: the flow, where the released observable vanishes (UA-22, UA-20; UO-24; UO-26, link L2 of §9).** On the one-pointer arena, the energy `−2⟨A⟩ − 2 f(θ₂)⟨B⟩ + c b(θ₁)(−2⟨C⟩)` for any constant `c`, with `C` commuting with `A` and `B`. From a point where `⟨C⟩ = 0` its Hamiltonian flow moves the ray by `exp(−itM) exp(−iκ(t)C)`, `M = A + f(θ₂) B`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`; `θ₁` advances by `f'(θ₂) ∫₀ᵗ (−2⟨B⟩)` along the orbit of `M` alone, as without the term; `θ₂` is fixed. Exact | `schrodingerUnitary_val`, `mul_schrodingerUnitary_of_commute`, `schrodingerUnitary_mul_comm_of_commute`, `continuous_schrodingerUnitary`, `hasDerivAt_schrodingerUnitary_mul_clock`, `hasMFDerivAt_torusWindow`, `releaseField`, `isHamiltonianVectorField_releaseTerm`, `isHamiltonianVectorField_controlObs`, `isHamiltonianVectorField_released`, `schrodingerHamiltonian_mul_smul_of_commute`, `schrodingerHamiltonian_mul_smul_self`, `releasedAngle`, `hasDerivAt_releasedAngle`, `continuous_releasedAngle`, `releasedClock`, `hasDerivAt_releasedClock`, `releasedCurve`, `mul_coupledMatrix_of_commute`, `isMIntegralCurve_releasedCurve`, `hamiltonianFlow_released` (`LF4/ReleasedFlow.lean`) | **only where `⟨C⟩ = 0`**, a closed set with empty interior in general: elsewhere `θ₂` moves at the rate `c (−2⟨C⟩) b'(θ₁)` and nothing is given; `C` commuting with `A` and `B` is a hypothesis, and no carrier is put in; one pointer, the constant `c` standing for the next pointer's profile, the step not composed; no readout, so that the pointer turns into the window is not shown; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3602,6 +3605,18 @@ no chart work left to do. What it does not give. That matrix derivative; the fie
 `b(θ₁) · (−2⟨C⟩)` on the arena; the closed-form curve as an integral curve; the flow. No
 new assumption.
 
+Exact scope of UD-271 (BACKLOG #437; assumptions UA-20, UA-22; obligations UO-24, UO-26).
+What it gives. The argument on paper under UA-22, proved: the first solved flow in which
+what a carrier does depends on a pointer's **moving** angle, off the fibres where the
+term vanishes. With `b` shut the clock `κ` does not advance and the part of the ray
+moved by `C` is at rest; with `b` open it moves as under `C` alone, with its whole
+weight; and the pointer that opens the window is not disturbed. What it does not give.
+Anything off `⟨C⟩ = 0` (UA-22, risk (ii)). The composite in which `C` is a return
+carrier's Hamiltonian less its mean and `B` the observable that the event's pointer
+reads: the matrices here are any three that commute as stated. That the event's pointer
+turns into the window after a meeting and not before. An arrival and its record. R1 to
+R7 of §9.4 are still owed. No new assumption beyond UA-20 and UA-22.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5168,6 +5183,10 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **Twenty-seventh brick, 2026-11-26 (BACKLOG #437) → UD-270.** A tool for that flow:
   the velocity on `ℂℙⁿ` of the orbit of any differentiable curve of unitaries. No flow
   yet.
+  ▸ **Twenty-eighth brick, 2026-11-26 (BACKLOG #437) → UD-271.** The flow with the
+  release, exact where `⟨C⟩ = 0`: the carrier moved by `C` runs with the clock
+  `c ∫ b(θ₁)`, and the pointer is not disturbed. No carrier, no readout, nothing off
+  `⟨C⟩ = 0`.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5462,9 +5481,9 @@ is small and the contact has to be short (UD-269). (2) *The record releases it* 
 the author's sentence of 2026-11-26): the pointer that recorded the meeting opens a
 window through which a carrier prepared at the event moves. Its weight is the whole
 carrier, and the control is the record itself. It needs the flow of UA-20's term on the
-fibres where its profile does not vanish, which Lean does not have; the argument of
-UA-22 says it is solved exactly where `⟨K⟩ = 0`. Either way R1 to R7 stand as written,
-and so do L3 to L5.
+fibres where its profile does not vanish; since UD-271 Lean has it, exact where
+`⟨K⟩ = 0` (`hamiltonianFlow_released`), for matrices not yet specialised to a return
+carrier. Either way R1 to R7 stand as written, and so do L3 to L5.
 * **L3 to L5.** Nothing. This arena has no clock and no observer.
 
 **What the receiver has to deliver.** For L3 to start from an encounter, L2 owes one
