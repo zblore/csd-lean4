@@ -165,6 +165,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamilt
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryCurve
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCriticalPoints
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
@@ -17054,5 +17055,15 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute
+
+/-! ### #437, UA-22: the orbit of a unitary curve on CP^n has a Schrödinger field for its velocity (ProjectiveSpaceUnitaryCurve.lean, 2026-11-26) -/
+
+/-- info: 'Projectivization.hasDerivAt_chartFun_unitaryCurve_smul_chartInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_chartFun_unitaryCurve_smul_chartInv
+
+/-- info: 'Projectivization.hasMFDerivAt_unitaryCurve_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_unitaryCurve_smul
 
 end CSD.Tests.AxiomAudit

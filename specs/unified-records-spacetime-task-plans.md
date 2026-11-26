@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-269; UA-21 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-270; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -470,6 +470,10 @@ before the meeting).
    `t ↦ U_M(t) U_C(c B(t)) • x`, a commuting pair with a clock that is not linear;
    `isMIntegralCurve_schrodingerUnitary_smul` is for one matrix and the clock `t`, and is
    proved in a chart. Size L. No obstruction found; nothing written.
+   The crux is done (2026-11-26, `ProjectiveSpaceUnitaryCurve.lean`, UD-270):
+   `hasMFDerivAt_unitaryCurve_smul`, for any curve of unitaries. Left for (α): the
+   matrix derivative of `U_M(t) U_C(c B(t))`; that `⟨B⟩` and `⟨C⟩` do not see a
+   commuting unitary; the field of `b(θ₁) · (−2⟨C⟩)`; the curve and uniqueness.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

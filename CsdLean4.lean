@@ -1030,6 +1030,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryCurve
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCriticalPoints
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
