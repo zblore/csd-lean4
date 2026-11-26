@@ -24286,4 +24286,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_band_gated_second_level
 
+/-! #437, UO-26: the band against one energy for the second level (`RecordLayer/TransponderBandFlat.lean`). -/
+
+/-- info: 'CSD.RecordLayer.bandDefect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandDefect
+
+/-- info: 'CSD.RecordLayer.bandBlocks_eq_add_bandDefect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandBlocks_eq_add_bandDefect
+
+/-- info: 'CSD.RecordLayer.bandDefect_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandDefect_isHermitian
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_bandDefect_mulVec_inLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_bandDefect_mulVec_inLevel_zero
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_bandDefect_mulVec_inLevel_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_bandDefect_mulVec_inLevel_one
+
+/-- info: 'CSD.RecordLayer.norm_neg_exp_mul_I_sin_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_neg_exp_mul_I_sin_mul
+
+/-- info: 'CSD.RecordLayer.sqrt_sum_norm_sq_bandDefect_levels_orbit_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_sum_norm_sq_bandDefect_levels_orbit_le
+
+/-- info: 'CSD.RecordLayer.sqrt_sum_norm_sq_exp_band_sub_levels_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_sum_norm_sq_exp_band_sub_levels_le
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_exp_compositeH_sub_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_exp_compositeH_sub_prod
+
 end CSD.Tests.AxiomAudit

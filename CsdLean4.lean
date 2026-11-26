@@ -881,6 +881,7 @@ public import CsdLean4.RecordLayer.TorusDetector
 public import CsdLean4.RecordLayer.TorusRateBound
 public import CsdLean4.RecordLayer.TransponderAtRest
 public import CsdLean4.RecordLayer.TransponderBand
+public import CsdLean4.RecordLayer.TransponderBandFlat
 public import CsdLean4.RecordLayer.TransponderBandGate
 public import CsdLean4.RecordLayer.TransponderBandRabi
 public import CsdLean4.RecordLayer.TransponderDetuned

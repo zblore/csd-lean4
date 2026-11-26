@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-267; UA-21 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-268; UA-21 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -439,6 +439,13 @@ before the meeting).
    messenger's free orbit and the transponder's solved orbit; (a''') the weight of the
    transponder's solved orbit outside a box, where the amplitudes are modulated mode by
    mode and the flat-packet tail does not apply as it stands.
+   (a''') is met for a short contact without modes (2026-11-26,
+   `RecordLayer/TransponderBandFlat.lean`, UD-268): the banded transponder is the
+   two-level one within `(|g|/Ω) ‖(H₁ − E 1) χ‖ s`, and (a'') is
+   `sum_norm_sq_exp_compositeH_sub_prod` with `exp_compositeH_mulVec_prod`. Next: join
+   them under UD-267's integral for the flat messenger packet (the reference orbit is
+   UD-262's, so UD-263's bounds are the model); then `‖(H₁ − E 1) χ‖` for a flat packet
+   from the window's energies; then the free motion after the contact.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
