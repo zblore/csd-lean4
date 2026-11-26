@@ -762,9 +762,14 @@ what would discharge or constrain it.
   so "at rest" is exact and the first level does not spread.
   (c) *The second level.* The lattice Dirac Hamiltonian on those sites, with its own
   hopping, mass and Clifford family. This is the band of UA-19 (d).
-  (d) *The preparation (UA-4).* The transponder starts in its first level with the wave
-  function of a flat packet of the second level's positive branch about a momentum `k₀'`,
-  on the sites where the event is to be. In the first level this packet does not move.
+  (d) *The preparation (UA-4).* Decided by the author, 2026-11-26: no direction, one
+  speed. The transponder starts in its first level with the wave function of a sum of `m`
+  flat packets of the second level's positive branch, on the sites where the event is to
+  be. Their momenta `k₀'_1, …, k₀'_m` have one magnitude and directions spaced evenly, and
+  are fixed without reference to where any receiver is. On a line these are `±k₀'`. In
+  the first level the sum does not move. The clause as first written (2026-11-26, one
+  packet about one `k₀'`) is the case `m = 1`; UD-265 is stated for it and is used one
+  packet at a time.
   (e) *The contact term.* As UA-19 (b): the coincidence projector times the level swap. The
   swap is the identity on the sites and on the spinor index.
   (f) *What may not be assumed.* The time of the launch, and that any of the launched part
@@ -775,12 +780,19 @@ what would discharge or constrain it.
   item (1) of UO-26. No launch is shown for this transponder.
 * **Standing.** A choice of band and of preparation, on the assistant's recommendation. It
   replaces the transponder of UD-251 to UD-263 for a return that is to travel and leaves
-  those statements as they are. The author has not yet read the clause.
-* **Known risks, stated so that a failure is recognised as one.** (i) **The direction and
-  the speed of the return are set by the preparation**, through `k₀'` in (d): by the test
-  of UO-16 only the time of the launch can then be said to be caused by the meeting. If
-  that is not acceptable the transponder has to be prepared with no preferred direction,
-  and the return is then a wave spreading from a point, of which a receiver gets a part.
+  those statements as they are. The author chose (d) on 2026-11-26 from four options
+  (one direction; directions aimed at the receivers; no direction and one speed; no
+  direction and no speed). The rest of the clause the author has not yet read.
+* **Known risks, stated so that a failure is recognised as one.** (i) *Settled by the
+  author, 2026-11-26.* With one packet about one `k₀'` the direction of the return is set
+  by the preparation, which is what the author refused for the prepared echo (UO-17,
+  2026-11-18). So (d) has no direction. The speed is still chosen with the window's
+  magnitude, as the messenger's is; by the test of UO-16 it has to be stated as the
+  band's group velocity there and not as a number. What (d) costs: each receiver gets a
+  part of the weight, so its reading takes longer (§9.4, R5); the `m` packets are beams
+  and do not spread, so a receiver's region has to be wide enough, as seen from the
+  event, to hold one beam's moving box whatever the directions are; the beams' speeds
+  differ with direction at order `(a p)²` (UD-207).
   (ii) With (c) the level swap does not commute with the transponder's Hamiltonian, so the
   lower bounds of UD-253 to UD-263 do not carry over; each momentum of the packet has its
   own detuning `(E(k) − E₀)/2`, and the launch is in phase only where that is small against
@@ -5329,9 +5341,9 @@ theorem with these parts. They are UO-26 (2) and (3), restated from what §9.5 n
 
 R6 bears on UA-21. A return prepared about one momentum `k₀'` travels along one line, and
 `d + 1` receivers in general position do not lie on a line. So the chart of §9.5 needs a
-return that spreads, or a transponder prepared with several directions, each receiver
-then getting a part of the weight. This is risk (i) of UA-21 seen from L3, and it is the
-author's to settle.
+return with no direction, each receiver then getting a part of the weight. The author
+settled it so on 2026-11-26: UA-21 (d), directions spaced evenly and fixed without
+reference to the receivers.
 
 ### 9.5 `2 + 1` and `3 + 1`: what records would have to supply
 
