@@ -462,6 +462,14 @@ before the meeting).
    and a free packet with the clock `c B(t)` after; (γ) its arrival record at a
    detector at a distance from UD-242 to UD-245, with the control "no meeting, no
    display, no return"; (δ) a bound off `⟨K⟩ = 0`.
+   Sized on 2026-11-26 by reading `LF4/ArenaCoupledFlow.lean`: (α) follows the pattern of
+   `hamiltonianFlow_coupledEnergy` (a field shown Hamiltonian, a closed-form curve shown
+   to be its integral curve, uniqueness on the compact arena). Two parts are new. The
+   field of `b(θ₁) · (−2⟨C⟩)`, which is `isHamiltonianVectorField_coupledTerm` with the
+   other torus coordinate. And the crux: the derivative on `ℂℙᴺ` of
+   `t ↦ U_M(t) U_C(c B(t)) • x`, a commuting pair with a clock that is not linear;
+   `isMIntegralCurve_schrodingerUnitary_smul` is for one matrix and the clock `t`, and is
+   proved in a chart. Size L. No obstruction found; nothing written.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
