@@ -1597,6 +1597,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-274 | **The clock of a released carrier, from the occupancy that drives the pointer; no meeting, no return (UA-22; UO-26, R4 of §9.4).** The clock is `κ(t) = c ∫₀ᵗ b(a₀ + Δ(u)) du`, `Δ` the pointer's displacement. (i) If the observable that drives the pointer has expectation `0` up to `t` and `b(a₀) = 0`, then `κ(t) = 0` on every fibre, and the flow of UD-273 leaves the return carrier at the ray where it was prepared and the pointer where it started. (ii) On a fibre with rate `κ₀ ≥ 0`, the window shut on `[a₀, a₀ + δ]`, expectation in `[0, ε]` up to `t₁` and `κ₀ ε t₁ ≤ δ`: `κ(t₁) = 0`. (iii) The window continuous, non-negative and `1` on `[a₀ + lo, a₀ + hi]`, `c ≥ 0`, expectation in `[0, 1]` up to `t` and at least `q` from `t₂`, `lo ≤ κ₀ q (t₀ − t₂)`, `κ₀ t ≤ hi`: `κ(t) ≥ c (t − t₀)`. And `κ(t) ≤ c t` for a window at most `1` | `windowClock_eq_zero`, `le_windowClock`, `windowClock_le`, `releasedClock_eq_zero_of_obs_eq_zero`, `releasedClock_eq_zero_of_obs_le`, `le_releasedClock_of_dwell`, `releasedClock_le`, `idxFreeU_zero`, `hamiltonianFlow_released_return_idle` (`RecordLayer/UnifiedReleasedClock.lean`) | **the occupancy bounds are hypotheses** (those of UD-260), with no carrier substituted and UD-261 not composed; a lower and an upper bound for the running clock, its value not located; the pointer must stay inside one open stretch (`κ₀ t ≤ hi`); no detector reads the return carrier, so the control is a statement about where it is and not yet about a count; flow times |
 | UD-275 | **A detector on the released return carrier (UA-22, UA-13 (d); UO-26, R1 and R4 of §9.4).** One more pointer, added by the step of UD-96's engine to the arena of UD-273, coupled through a profile `h` of its conserved angle to an observable `Q` of the return carrier. On a fibre where `h` vanishes, from a product ray: the earlier carriers, the event's pointer and the return carrier run as in UD-273, and the detector's moving angle advances by `h'(χ₂) ∫₀ᵗ (−2⟨Q⟩)` with `⟨Q⟩` read at `exp(−iκ(u)H_R) r`, `κ` the released clock. **No meeting, no arrival:** with the event's occupancy `0` up to `t`, the window shut at the event pointer's start, and `⟨Q⟩ = 0` at the prepared ray, the detector's pointer is at `t` where it started | `hamiltonianFlow_stepEnergy_arena_of_lift_eq_zero`, `returnDetectorShift`, `hamiltonianFlow_released_detector`, `hamiltonianFlow_released_detector_idle` (`RecordLayer/UnifiedReleasedDetector.lean`) | **on the fibres where the detector's profile vanishes**, a null set; the constant `c` still stands for the profile of the pointer that carries the release, which is not a torus of this arena; **a displacement, not a count**: no readout on the detector's torus, and that the displacement reaches a threshold after a meeting is not shown; `⟨Q⟩ = 0` at the prepared ray is a hypothesis; flow times |
 | UD-276 | **The detector's displacement on the released return carrier: small early, large late (UA-22; UO-26, R2 and R3 of §9.4).** The displacement of UD-275 is `ρ ∫₀ᵗ w(κ(u)) du`, `ρ = −2 h'(χ₂)` the detector's rate, `w(τ)` the return carrier's free occupancy of `Q` at its own time `τ`, `κ` the clock. For a continuous window with values in `[0, 1]`, `c ≥ 0`, `ρ ≥ 0`. (i) If `w ≤ ε` on `[0, τ₁]` and `c t ≤ τ₁`: the displacement at `t` is at most `ρ ε t`, whatever the event's pointer does. (ii) With `⟨Q⟩ ≥ 0` at every ray, the window `1` on `[a₀ + lo, a₀ + hi]`, the event's occupancy in `[0, 1]` up to `t` and at least `q` from `t₂`, `lo ≤ κ₀ q (t₀ − t₂)`, `κ₀ t ≤ hi`, and `w ≥ q'` on `[τ₂, τ₃]` with `τ₂ ≤ c (u₂ − t₀)`, `c t ≤ τ₃`: the displacement at `t` is at least `ρ q' (t − u₂)` | `returnClock`, `continuous_returnClock`, `returnClock_nonneg`, `returnClock_le`, `le_returnClock_of_dwell`, `continuous_arenaObs_returnClock`, `returnDetectorShift_eq`, `returnDetectorShift_nonneg`, `returnDetectorShift_le_of_early`, `le_returnDetectorShift_of_dwell` (`RecordLayer/UnifiedReleasedArrival.lean`) | **both occupancy bounds are hypotheses**: no return carrier and no earlier carrier is substituted for which they hold; **bounds for a displacement, not a count**: no readout on the detector's torus; the early bound uses only `κ(t) ≤ c t`, so it does not separate a meeting from none (UD-275's control does); the late bound loses `u₂ − t₂`, the event pointer's reading time and the travel time `τ₂ / c`, bounded and not located; on the fibres of UD-275; flow times |
+| UD-277 | **The arrival of the released return carrier as a record, with its control (UA-22, UA-13 (d); UO-26, R1 to R4 of §9.4).** The arena of UD-275 as a dynamics with `μ_FS ⊗ vol ⊗ vol` and a tick readout of its two pointers (the event's and the detector's). On a fibre where the detector's profile vanishes, from a ready detector pointer and a product ray. (i) Under the hypotheses of UD-276 with `0 ≤ ⟨Q⟩ ≤ 1` at every ray, `ρ ε t₁ ≤ 1/6`, `1/3 ≤ ρ q' (t − u₂)`, `ρ t ≤ 2/3`: the start of the run is in the compatible region of "the detector has counted `0` at `t₁`" and "the detector has counted `1` at `t`". (ii) With the event's occupancy `0` up to `t`, the window shut at the event pointer's start and `⟨Q⟩ = 0` at the prepared ray: "the detector has counted `0` at `t`" is a recorded fact of the start | `stepArenaDynamics`, `stepPointer`, `continuous_stepPointer`, `stepArenaReadout`, `returnDetectorShift_zero`, `continuous_returnDetectorShift`, `monotoneOn_returnDetectorShift`, `returnDetectorShift_le`, `returnDetectorShift_eq_zero_of_obs_eq_zero`, `releasedDetectorReadout`, `released_detector_isTickCount`, `released_detector_arrival_records`, `released_detector_idle_record` (`RecordLayer/UnifiedReleasedRecord.lean`) | **the occupancy bounds and the three threshold inequalities are hypotheses**, met by no carriers shown: no instance; **the event's own count is not in the history** (its pointer is in the readout, unread); counts from the start, not a time of arrival; on the fibres where the detector's profile vanishes, a null set; the constant `c` for the release pointer's profile; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3675,6 +3676,15 @@ readout on the detector's torus that turns "displacement below a threshold at `t
 it at `t`" into recorded facts (route (γ3c)). An instance in which the four occupancy
 bounds hold. The time located (R5): `u₂ − t₂` is bounded, not found. No new assumption.
 
+Exact scope of UD-277 (BACKLOG #437; assumptions UA-13, UA-20, UA-22; obligation UO-26).
+What it gives. R2 and R3 in the record semantics: the detector's two counts are a record
+history of the start. And the first control of R4 in the same semantics: with no meeting
+the count is `0` at every time covered. Both in one arena with one flow and one readout
+(R1). What it does not give. Carriers for which the hypotheses hold (an instance). The
+meeting's own record in the same history, which needs the event pointer's count along
+this flow and thresholds for it. The time located (R5), the second control of R4 (a
+return not caused by this meeting), R6, R7. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5261,6 +5271,9 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **Thirty-third brick, 2026-11-27 (BACKLOG #437) → UD-276.** That displacement
   bounded: at most `ρ ε t` early, at least `ρ q' (t − u₂)` after a meeting. The
   occupancy bounds are hypotheses; still no readout.
+  ▸ **Thirty-fourth brick, 2026-11-27 (BACKLOG #437) → UD-277.** The readout: the
+  detector's counts `0` at `t₁` and `1` at `t` as a record history, and count `0`
+  with no meeting. Hypotheses on occupancies and thresholds; no instance.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5563,8 +5576,12 @@ UA-21).
   pointer does not move (`hamiltonianFlow_released_detector_idle`). Since UD-276 its
   displacement is bounded above early and below after a meeting
   (`returnDetectorShift_le_of_early`, `le_returnDetectorShift_of_dwell`), from
-  occupancy bounds taken as hypotheses. Still owed: the readout that makes these
-  counts (R2, R3), the time located (R5), the receiver's clock (R7), an instance.
+  occupancy bounds taken as hypotheses. Since UD-277 they are counts in the record
+  semantics of one readout (`released_detector_arrival_records`), and the control is
+  the recorded count `0` (`released_detector_idle_record`): R1 to R3 and the first
+  control of R4, conditionally. Still owed: an instance in which the hypotheses hold,
+  the meeting's own record in the same history, the time located (R5), the
+  receiver's clock (R7).
 
 **Two ways across.** Linking one record to a later one is not what is missing: the wall
 run has five linked records in one orbit, and UD-241 orders two displays. What L2 lacks

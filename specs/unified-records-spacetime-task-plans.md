@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-276; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-277; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -519,6 +519,13 @@ before the meeting).
    displacement is below one turn (`ρ t < 1`); the control reads `0` throughout by
    UD-275. The readout must be put on the step arena `KSigma × KTorus`, where UD-242's
    is on `KSigma`.
+   (γ3c) is done (2026-11-27, `RecordLayer/UnifiedReleasedRecord.lean`, UD-277). Left:
+   (γ3d) the release pointer as a torus; (γ4) the event pointer's count along the same
+   flow (`stepPointer false`, displacement `idxPointerShift`, by `isTickCount_pointer`)
+   so that the meeting's record and the arrival's are one history; (γ5) an instance:
+   the meeting-record instance of UD-261 for the earlier carriers, a flat Dirac packet
+   for the return carrier with `arenaObs_return_packet_siteSet`, and numbers for the
+   seven inequalities.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

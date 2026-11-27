@@ -24532,4 +24532,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.le_returnDetectorShift_of_dwell
 
+/-! #437, UA-22: the arrival of the released return carrier as a record, with its control (`RecordLayer/UnifiedReleasedRecord.lean`). -/
+
+/-- info: 'CSD.RecordLayer.stepArenaDynamics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.stepArenaDynamics
+
+/-- info: 'CSD.RecordLayer.stepPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.stepPointer
+
+/-- info: 'CSD.RecordLayer.continuous_stepPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_stepPointer
+
+/-- info: 'CSD.RecordLayer.stepArenaReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.stepArenaReadout
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_zero
+
+/-- info: 'CSD.RecordLayer.continuous_returnDetectorShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_returnDetectorShift
+
+/-- info: 'CSD.RecordLayer.monotoneOn_returnDetectorShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.monotoneOn_returnDetectorShift
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_le
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_eq_zero_of_obs_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_eq_zero_of_obs_eq_zero
+
+/-- info: 'CSD.RecordLayer.releasedDetectorReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedDetectorReadout
+
+/-- info: 'CSD.RecordLayer.released_detector_isTickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_isTickCount
+
+/-- info: 'CSD.RecordLayer.released_detector_arrival_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_arrival_records
+
+/-- info: 'CSD.RecordLayer.released_detector_idle_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_idle_record
+
 end CSD.Tests.AxiomAudit
