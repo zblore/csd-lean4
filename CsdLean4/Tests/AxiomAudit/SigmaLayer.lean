@@ -24434,4 +24434,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arenaObs_return_packet_siteSet
 
+/-! #437, UA-22: the clock of a released carrier, and no meeting, no return (`RecordLayer/UnifiedReleasedClock.lean`). -/
+
+/-- info: 'CSD.RecordLayer.windowClock_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.windowClock_eq_zero
+
+/-- info: 'CSD.RecordLayer.le_windowClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_windowClock
+
+/-- info: 'CSD.RecordLayer.windowClock_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.windowClock_le
+
+/-- info: 'CSD.RecordLayer.releasedClock_eq_zero_of_obs_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedClock_eq_zero_of_obs_eq_zero
+
+/-- info: 'CSD.RecordLayer.releasedClock_eq_zero_of_obs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedClock_eq_zero_of_obs_le
+
+/-- info: 'CSD.RecordLayer.le_releasedClock_of_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_releasedClock_of_dwell
+
+/-- info: 'CSD.RecordLayer.releasedClock_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedClock_le
+
+/-- info: 'CSD.RecordLayer.idxFreeU_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxFreeU_zero
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_return_idle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_return_idle
+
 end CSD.Tests.AxiomAudit

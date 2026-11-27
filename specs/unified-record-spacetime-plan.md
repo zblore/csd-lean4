@@ -1594,6 +1594,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-271 | **A carrier released by a pointer's angle: the flow, where the released observable vanishes (UA-22, UA-20; UO-24; UO-26, link L2 of §9).** On the one-pointer arena, the energy `−2⟨A⟩ − 2 f(θ₂)⟨B⟩ + c b(θ₁)(−2⟨C⟩)` for any constant `c`, with `C` commuting with `A` and `B`. From a point where `⟨C⟩ = 0` its Hamiltonian flow moves the ray by `exp(−itM) exp(−iκ(t)C)`, `M = A + f(θ₂) B`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`; `θ₁` advances by `f'(θ₂) ∫₀ᵗ (−2⟨B⟩)` along the orbit of `M` alone, as without the term; `θ₂` is fixed. Exact | `schrodingerUnitary_val`, `mul_schrodingerUnitary_of_commute`, `schrodingerUnitary_mul_comm_of_commute`, `continuous_schrodingerUnitary`, `hasDerivAt_schrodingerUnitary_mul_clock`, `hasMFDerivAt_torusWindow`, `releaseField`, `isHamiltonianVectorField_releaseTerm`, `isHamiltonianVectorField_controlObs`, `isHamiltonianVectorField_released`, `schrodingerHamiltonian_mul_smul_of_commute`, `schrodingerHamiltonian_mul_smul_self`, `releasedAngle`, `hasDerivAt_releasedAngle`, `continuous_releasedAngle`, `releasedClock`, `hasDerivAt_releasedClock`, `releasedCurve`, `mul_coupledMatrix_of_commute`, `isMIntegralCurve_releasedCurve`, `hamiltonianFlow_released` (`LF4/ReleasedFlow.lean`) | **only where `⟨C⟩ = 0`**, a closed set with empty interior in general: elsewhere `θ₂` moves at the rate `c (−2⟨C⟩) b'(θ₁)` and nothing is given; `C` commuting with `A` and `B` is a hypothesis, and no carrier is put in; one pointer, the constant `c` standing for the next pointer's profile, the step not composed; no readout, so that the pointer turns into the window is not shown; flow times |
 | UD-272 | **A return carrier released by a pointer: the composite's flow (UA-22; UO-26, link L2 of §9).** Earlier carriers with a Hermitian `H_a` and the observable `P` that the pointer reads; a return carrier with a Hermitian `K` on which no other term acts, `⟨K⟩ = 0` at its ray. For any constant `c`, the Hamiltonian flow of `−2⟨H_a ⊗ 1⟩ − 2 f(θ₂)⟨P ⊗ 1⟩ + c b(θ₁)(−2⟨1 ⊗ K⟩)` from a product ray keeps the ray a product: the earlier carriers move by `exp(−it(H_a + f(θ₂) P))` and the pointer by its displacement, exactly as with no return carrier; the return carrier moves by `exp(−iκ(t)K)`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`. Also the flow of UD-271 in a carrier's own coordinates. Exact | `reindex_mul_comm`, `hamiltonianFlow_released_reindex`, `idxFreeU_one_kronecker`, `idxCarrierU_kronecker_one`, `arenaKick_one`, `arenaKick_idxFreeU_one_kronecker_prodRay`, `arenaKick_idxCarrierU_kronecker_one_prodRay`, `idxPointerShift_kronecker_one`, `hamiltonianFlow_released_composite` (`RecordLayer/UnifiedReleasedCarrier.lean`) | **only where the return carrier has `⟨K⟩ = 0`, and from a product ray**; `K = H_R − Ē` is a choice of the preparation and is not made here; the constant `c` stands for the next pointer's profile, the step not composed; no readout and no packet: that the pointer turns into the window, and where the return carrier then is, are not shown; flow times |
 | UD-273 | **The released return carrier with its own Hamiltonian, and where a packet of it is (UA-22; UO-26, link L2 of §9).** For a return carrier with a Hermitian Hamiltonian `H_R` started at any ray `r`, and the released term `c b(θ₁)(−2⟨1 ⊗ (H_R − ⟨H_R⟩_r)⟩)`: from the product ray the earlier carriers and the pointer run as with no return carrier and the return carrier is at `exp(−iκ(t)H_R) r`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`. Subtracting a real constant from a Hamiltonian does not change the motion of a ray. For a packet of the lattice Dirac field as the return carrier, its weight on a set of sites in the product is the packet's weight at `κ`, over its norm. Exact | `sub_smul_one_isHermitian`, `arenaObs_sub_smul_one`, `idxFreeU_sub_smul_one_val`, `arenaKick_congr_smul`, `arenaKick_idxFreeU_sub_smul_one`, `hamiltonianFlow_released_return`, `arenaObs_return_packet_siteSet` (`RecordLayer/UnifiedReleasedReturn.lean`) | **the mean energy of the prepared ray is in the term**, so the energy depends on the preparation; from a product ray only; the constant `c` stands for the next pointer's profile, the step not composed; **the clock is not evaluated**: neither that it stays `0` before a meeting nor that it leaves `0` after one; no detector reads the return carrier; flow times |
+| UD-274 | **The clock of a released carrier, from the occupancy that drives the pointer; no meeting, no return (UA-22; UO-26, R4 of §9.4).** The clock is `κ(t) = c ∫₀ᵗ b(a₀ + Δ(u)) du`, `Δ` the pointer's displacement. (i) If the observable that drives the pointer has expectation `0` up to `t` and `b(a₀) = 0`, then `κ(t) = 0` on every fibre, and the flow of UD-273 leaves the return carrier at the ray where it was prepared and the pointer where it started. (ii) On a fibre with rate `κ₀ ≥ 0`, the window shut on `[a₀, a₀ + δ]`, expectation in `[0, ε]` up to `t₁` and `κ₀ ε t₁ ≤ δ`: `κ(t₁) = 0`. (iii) The window continuous, non-negative and `1` on `[a₀ + lo, a₀ + hi]`, `c ≥ 0`, expectation in `[0, 1]` up to `t` and at least `q` from `t₂`, `lo ≤ κ₀ q (t₀ − t₂)`, `κ₀ t ≤ hi`: `κ(t) ≥ c (t − t₀)`. And `κ(t) ≤ c t` for a window at most `1` | `windowClock_eq_zero`, `le_windowClock`, `windowClock_le`, `releasedClock_eq_zero_of_obs_eq_zero`, `releasedClock_eq_zero_of_obs_le`, `le_releasedClock_of_dwell`, `releasedClock_le`, `idxFreeU_zero`, `hamiltonianFlow_released_return_idle` (`RecordLayer/UnifiedReleasedClock.lean`) | **the occupancy bounds are hypotheses** (those of UD-260), with no carrier substituted and UD-261 not composed; a lower and an upper bound for the running clock, its value not located; the pointer must stay inside one open stretch (`κ₀ t ≤ hi`); no detector reads the return carrier, so the control is a statement about where it is and not yet about a count; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3641,6 +3642,15 @@ vanishes, and that depends on the pointer's run, which for the meeting record is
 and UD-261 and is not substituted here. An arrival record and its control (route (γ)).
 Anything off product rays (route (δ)). No new assumption.
 
+Exact scope of UD-274 (BACKLOG #437; assumptions UA-20, UA-22; obligation UO-26). What it
+gives. The record's part of UD-273, made explicit: the same three hypotheses on the
+occupancy from which UD-260 reads "count `0`, then at least `1`" also give "clock `0`,
+then running". So the release follows the record, and with no meeting there is none:
+the first control of R4, as a statement about the flow, on every fibre. What it does
+not give. A count at a receiver (R2, R3): there is no detector on the return carrier.
+The time located (R5): between `c (t − t₀)` and `c t` the clock is not pinned, and `t₀`
+carries the reading time of the event's pointer. An instance. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5217,6 +5227,10 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **Thirtieth brick, 2026-11-27 (BACKLOG #437) → UD-273.** The return carrier with its
   own Hamiltonian from any ray, and a Dirac packet's weight on a set of sites at the
   clock. The clock is not evaluated; no arrival record.
+  ▸ **Thirty-first brick, 2026-11-27 (BACKLOG #437) → UD-274.** The clock from the
+  occupancy: `0` with no meeting and before the record, at least `c (t − t₀)` after.
+  The first control of R4 as a statement about the flow. No detector on the return
+  carrier yet.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5510,6 +5524,13 @@ UA-21).
   is still broken, further on: the contact starts at the flow time `0` and not after a
   meeting, the launched part is not followed after the contact, and there is no
   receiver. Of R1 to R7 only the first control of R4 is in hand (`g = 0` gives `0`).
+  *Since 2026-11-27 (UD-270 to UD-274), by UA-22.* A carrier prepared at the event is
+  released by the pointer that records the meeting: it stays where it was prepared
+  while that pointer's occupancy is `0` (`hamiltonianFlow_released_return_idle`), and
+  is its free state at a clock that runs once the pointer is in the window
+  (`hamiltonianFlow_released_return`, `le_releasedClock_of_dwell`). Still owed: a
+  detector on the return carrier with its counts (R1 to R3), the time located (R5),
+  the receiver's clock (R7), an instance.
 
 **Two ways across.** Linking one record to a later one is not what is missing: the wall
 run has five linked records in one orbit, and UD-241 orders two displays. What L2 lacks

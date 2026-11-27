@@ -1052,7 +1052,9 @@ isSymplectic"
 #   hamiltonianFlow_released_composite are hamiltonianFlow_released read in a carrier's
 #   coordinates and on a product of two carriers — EARNED, and no stronger than it;
 #   hamiltonianFlow_released_return (RecordLayer/UnifiedReleasedReturn.lean) is the composite
-#   with K = H_R - <H_R>, the constant dropped from the ray's motion — EARNED, same scope.)
+#   with K = H_R - <H_R>, the constant dropped from the ray's motion — EARNED, same scope;
+#   hamiltonianFlow_released_return_idle (RecordLayer/UnifiedReleasedClock.lean) is that flow
+#   with the clock shown to be 0 while the pointer's observable is 0 — EARNED, same scope.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1261,6 +1263,7 @@ hamiltonianFlow_released
 hamiltonianFlow_released_reindex
 hamiltonianFlow_released_composite
 hamiltonianFlow_released_return
+hamiltonianFlow_released_return_idle
 schrodingerHamiltonian_mul_smul_of_commute
 schrodingerHamiltonian_mul_smul_self
 schrodingerHamiltonian_hamOccA
