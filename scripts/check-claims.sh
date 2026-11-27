@@ -1050,7 +1050,9 @@ isSymplectic"
 #   -2<B> and -2<C> are unchanged by commuting unitaries — statements about expectations;
 #   #437 RecordLayer/UnifiedReleasedCarrier.lean: hamiltonianFlow_released_reindex and
 #   hamiltonianFlow_released_composite are hamiltonianFlow_released read in a carrier's
-#   coordinates and on a product of two carriers — EARNED, and no stronger than it.)
+#   coordinates and on a product of two carriers — EARNED, and no stronger than it;
+#   hamiltonianFlow_released_return (RecordLayer/UnifiedReleasedReturn.lean) is the composite
+#   with K = H_R - <H_R>, the constant dropped from the ray's motion — EARNED, same scope.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1258,6 +1260,7 @@ isHamiltonianVectorField_released
 hamiltonianFlow_released
 hamiltonianFlow_released_reindex
 hamiltonianFlow_released_composite
+hamiltonianFlow_released_return
 schrodingerHamiltonian_mul_smul_of_commute
 schrodingerHamiltonian_mul_smul_self
 schrodingerHamiltonian_hamOccA

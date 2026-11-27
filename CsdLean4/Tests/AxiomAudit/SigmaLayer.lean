@@ -24404,4 +24404,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.hamiltonianFlow_released_composite
 
+/-! #437, UA-22: the released return carrier with its own Hamiltonian, and where a packet of it is (`RecordLayer/UnifiedReleasedReturn.lean`). -/
+
+/-- info: 'CSD.RecordLayer.sub_smul_one_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sub_smul_one_isHermitian
+
+/-- info: 'CSD.RecordLayer.arenaObs_sub_smul_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_sub_smul_one
+
+/-- info: 'CSD.RecordLayer.idxFreeU_sub_smul_one_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxFreeU_sub_smul_one_val
+
+/-- info: 'CSD.RecordLayer.arenaKick_congr_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_congr_smul
+
+/-- info: 'CSD.RecordLayer.arenaKick_idxFreeU_sub_smul_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_idxFreeU_sub_smul_one
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_return
+
+/-- info: 'CSD.RecordLayer.arenaObs_return_packet_siteSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_return_packet_siteSet
+
 end CSD.Tests.AxiomAudit

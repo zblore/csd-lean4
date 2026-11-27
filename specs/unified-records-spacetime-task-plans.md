@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-272; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-273; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -486,6 +486,17 @@ before the meeting).
    `hamiltonianFlow_released_composite`. Next (β2): `K = H_R − Ē` for the lattice Dirac
    `H_R`, where `exp(−iκK)` is `exp(−iκH_R)` up to a phase that a ray does not see; a
    packet with `⟨H_R⟩ = Ē`; its weight in a set of sites at the clock `κ(t)`.
+   (β2) is done (2026-11-27, `RecordLayer/UnifiedReleasedReturn.lean`, UD-273), with
+   `Ē` the mean energy of whatever ray is prepared. Next (γ), in three parts. (γ1) The
+   clock: `κ(t) = 0` while the pointer's angle stays where `b` vanishes, and
+   `κ(t) ≥ c (t − t₀)` from a time `t₀` after which it stays where `b = 1`; both from
+   the pointer's displacement, with UD-260's bounds for the meeting record. (γ2) The
+   next pointer: `hamiltonianFlow_controlledEnergy` over this base, its displacement
+   `g'(ψ₂) ∫ b(θ₁)(−2⟨1 ⊗ K⟩)`, which is zero here since `⟨K⟩ = 0`: so the pointer that
+   releases does not itself record, and the arrival needs a detector pointer of its
+   own. (γ3) That detector: a third pointer on the return carrier's sites, by the step
+   theorem, with the counts of UD-242 and the control "no meeting, clock `0`, no
+   arrival".
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
