@@ -24490,4 +24490,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.hamiltonianFlow_released_detector_idle
 
+/-! #437, UA-22: the detector's displacement on the released return carrier, small early and large late (`RecordLayer/UnifiedReleasedArrival.lean`). -/
+
+/-- info: 'CSD.RecordLayer.returnClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnClock
+
+/-- info: 'CSD.RecordLayer.continuous_returnClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_returnClock
+
+/-- info: 'CSD.RecordLayer.returnClock_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnClock_nonneg
+
+/-- info: 'CSD.RecordLayer.returnClock_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnClock_le
+
+/-- info: 'CSD.RecordLayer.le_returnClock_of_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_returnClock_of_dwell
+
+/-- info: 'CSD.RecordLayer.continuous_arenaObs_returnClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_arenaObs_returnClock
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_eq
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_nonneg
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_le_of_early' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_le_of_early
+
+/-- info: 'CSD.RecordLayer.le_returnDetectorShift_of_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_returnDetectorShift_of_dwell
+
 end CSD.Tests.AxiomAudit

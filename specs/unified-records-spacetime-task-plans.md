@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-275; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-276; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -512,6 +512,13 @@ before the meeting).
    torus for the step arena and the counts as recorded facts, as UD-242 has them on
    the one-pointer arena; (γ3d) the same with the pointer that carries the release as
    a torus (`hamiltonianFlow_controlledEnergy`).
+   (γ3b) is done (2026-11-27, `RecordLayer/UnifiedReleasedArrival.lean`, UD-276), with
+   the clock named `returnClock`. For (γ3c): the detector's angle after the flow is
+   `χ₁ + returnDetectorShift`, so a readout that ticks at a threshold `θ` on the third
+   torus reads `0` while `ρ ε t₁ < θ` and at least `1` once `ρ q' (t − u₂) ≥ θ` and the
+   displacement is below one turn (`ρ t < 1`); the control reads `0` throughout by
+   UD-275. The readout must be put on the step arena `KSigma × KTorus`, where UD-242's
+   is on `KSigma`.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
