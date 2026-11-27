@@ -171,19 +171,19 @@ theorem releasedClock_eq_zero_of_obs_le (hA : A₀.IsHermitian) (hB : B₀.IsHer
 /-- ★★★ **Once the occupancy has turned the pointer into the window, the clock runs.** On a
 fibre with rate `κ = −2 f'(θ₂) ≥ 0`; the window is continuous, non-negative, and `1` on
 `[a₀ + lo, a₀ + hi]`; `c ≥ 0`. If the observable has expectation between `0` and `1` up to
-`t` and at least `q ≥ 0` from `t₂`, with `t₂ ≤ t₀ ≤ t`, `lo ≤ κ q (t₀ − t₂)` and `κ t ≤ hi`,
-the clock at `t` is at least `c (t − t₀)`. -/
+`t` and at least `q` on `[t₂, t₀]`, with `t₂ ≤ t₀ ≤ t`, `lo ≤ κ q (t₀ − t₂)` and `κ t ≤ hi`,
+the clock at `t` is at least `c (t − t₀)`. After `t₀` the occupancy may fall: the pointer does
+not turn back. -/
 theorem le_releasedClock_of_dwell (hA : A₀.IsHermitian) (hB : B₀.IsHermitian)
     (hf : Function.Periodic f 1) {φ : AddCircle (1 : ℝ)}
     (hκ : 0 ≤ -2 * hf.deriv_periodic.lift φ) (hbc : Continuous b) (hb0 : ∀ x, 0 ≤ b x)
     {c : ℝ} (hc : 0 ≤ c) {a₀ lo hi : ℝ} (hb1 : ∀ x, a₀ + lo ≤ x → x ≤ a₀ + hi → b x = 1)
     {p : GenArena ι} {t₂ t₀ t q : ℝ} (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0t : t₀ ≤ t)
-    (hq0 : 0 ≤ q)
     (h0 : ∀ s, 0 ≤ s → s ≤ t →
       0 ≤ arenaObs B₀ (arenaKick (idxCarrierU hA hB hf φ s) p))
     (hone : ∀ s, 0 ≤ s → s ≤ t →
       arenaObs B₀ (arenaKick (idxCarrierU hA hB hf φ s) p) ≤ 1)
-    (hq : ∀ s, t₂ ≤ s → s ≤ t →
+    (hq : ∀ s, t₂ ≤ s → s ≤ t₀ →
       q ≤ arenaObs B₀ (arenaKick (idxCarrierU hA hB hf φ s) p))
     (hlo : lo ≤ -2 * hf.deriv_periodic.lift φ * (q * (t₀ - t₂)))
     (hhi : -2 * hf.deriv_periodic.lift φ * t ≤ hi) :
@@ -193,11 +193,10 @@ theorem le_releasedClock_of_dwell (hA : A₀.IsHermitian) (hB : B₀.IsHermitian
     fun u hu0 hut => ?_
   show b (a₀ + idxPointerShift hA hB hf φ p u) = 1
   have hu : 0 ≤ u := (h2.trans h20).trans hu0
-  have hlow := le_idxPointerShift_of_dwell hA hB hf hκ h2 (h20.trans hu0)
-    (fun s hs hsu => h0 s hs (hsu.trans hut)) (fun s hs hsu => hq s hs (hsu.trans hut))
-  have hmono : -2 * hf.deriv_periodic.lift φ * (q * (t₀ - t₂))
-      ≤ -2 * hf.deriv_periodic.lift φ * (q * (u - t₂)) :=
-    mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (by linarith) hq0) hκ
+  have hlow := le_idxPointerShift_of_dwell hA hB hf hκ h2 h20
+    (fun s hs hsu => h0 s hs (hsu.trans h0t)) hq
+  have hmono : idxPointerShift hA hB hf φ p t₀ ≤ idxPointerShift hA hB hf φ p u :=
+    monotoneOn_idxPointerShift hA hB hf hκ h0 ⟨h2.trans h20, h0t⟩ ⟨hu, hut⟩ hu0
   have hup := idxPointerShift_le_of_obs_le hA hB hf hκ hu
     (fun s hs hsu => hone s hs (hsu.trans hut))
   have hmono' : -2 * hf.deriv_periodic.lift φ * (1 * u)

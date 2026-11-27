@@ -301,12 +301,12 @@ theorem released_detector_arrival_records (hHa : Ha.IsHermitian) (hP : P.IsHermi
     (hρ : 0 ≤ -2 * hh.deriv_periodic.lift χ.2)
     {t₁ τ₁ ε t₂ t₀ u₂ t q q' τ₂ τ₃ : ℝ} (ht₁ : 0 ≤ t₁) (hτ₁ : c * t₁ ≤ τ₁)
     (hε : ∀ τ, 0 ≤ τ → τ ≤ τ₁ → arenaObs Q (arenaKick (idxFreeU hHR τ) r) ≤ ε)
-    (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0u : t₀ ≤ u₂) (hut : u₂ ≤ t) (hq0 : 0 ≤ q)
+    (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0u : t₀ ≤ u₂) (hut : u₂ ≤ t)
     (hp0 : ∀ s, 0 ≤ s → s ≤ t →
       0 ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hone : ∀ s, 0 ≤ s → s ≤ t →
       arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa) ≤ 1)
-    (hq : ∀ s, t₂ ≤ s → s ≤ t →
+    (hq : ∀ s, t₂ ≤ s → s ≤ t₀ →
       q ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hlo : lo ≤ -2 * hf.deriv_periodic.lift φ * (q * (t₀ - t₂)))
     (hhi : -2 * hf.deriv_periodic.lift φ * t ≤ hi)
@@ -331,7 +331,7 @@ theorem released_detector_arrival_records (hHa : Ha.IsHermitian) (hP : P.IsHermi
   have c1 := released_detector_isTickCount e hHa hP hHR hf hb hh hc hcb hch c Q pa r a₀ φ χ h0
     ht (monotoneOn_returnDetectorShift hHa hP hHR hf hh hbc c hQ0 pa r a₀ φ hρ t)
   have hlow := le_returnDetectorShift_of_dwell hHa hP hHR hf hh hκ hbc hb0 hble hc0 hb1 hQ0 r
-    hρ h2 h20 h0u hut hq0 hp0 hone hq hlo hhi hτ₂ hτ₃ hq'
+    hρ h2 h20 h0u hut hp0 hone hq hlo hhi hτ₂ hτ₃ hq'
   have hup := returnDetectorShift_le hHa hP hHR hf hh hbc c hQ1 pa r a₀ φ hρ ht
   rw [card_tickIndices_eq_one_of_ready hr.1 hr.2 (by linarith [hr.1])
     (by linarith [hr.2])] at c1

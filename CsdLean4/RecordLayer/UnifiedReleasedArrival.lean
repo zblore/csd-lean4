@@ -114,17 +114,16 @@ theorem le_returnClock_of_dwell (hHa : Ha.IsHermitian) (hP : P.IsHermitian)
     (hκ : 0 ≤ -2 * hf.deriv_periodic.lift φ) (hbc : Continuous b) (hb0 : ∀ x, 0 ≤ b x)
     {c : ℝ} (hc : 0 ≤ c) {a₀ lo hi : ℝ} (hb1 : ∀ x, a₀ + lo ≤ x → x ≤ a₀ + hi → b x = 1)
     {pa : GenArena ι} {t₂ t₀ t q : ℝ} (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0t : t₀ ≤ t)
-    (hq0 : 0 ≤ q)
     (h0 : ∀ s, 0 ≤ s → s ≤ t →
       0 ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hone : ∀ s, 0 ≤ s → s ≤ t →
       arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa) ≤ 1)
-    (hq : ∀ s, t₂ ≤ s → s ≤ t →
+    (hq : ∀ s, t₂ ≤ s → s ≤ t₀ →
       q ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hlo : lo ≤ -2 * hf.deriv_periodic.lift φ * (q * (t₀ - t₂)))
     (hhi : -2 * hf.deriv_periodic.lift φ * t ≤ hi) :
     c * (t - t₀) ≤ returnClock hHa hP hf b c pa a₀ φ t :=
-  le_releasedClock_of_dwell hHa hP hf hκ hbc hb0 hc hb1 h2 h20 h0t hq0 h0 hone hq hlo hhi
+  le_releasedClock_of_dwell hHa hP hf hκ hbc hb0 hc hb1 h2 h20 h0t h0 hone hq hlo hhi
 
 end Clock
 
@@ -194,8 +193,8 @@ theorem returnDetectorShift_le_of_early (hHa : Ha.IsHermitian) (hP : P.IsHermiti
 /-- ★★★ **Late, after a meeting: a large displacement.** The event's pointer has rate
 `κ = −2 f'(φ) ≥ 0`; the window is continuous with values in `[0, 1]` and is `1` on
 `[a₀ + lo, a₀ + hi]`; `c ≥ 0`; the detector's rate is `ρ = −2 h'(χ₂) ≥ 0` and `⟨Q⟩ ≥ 0` at
-every ray. Suppose the event's occupancy is in `[0, 1]` up to `t` and at least `q` from
-`t₂`, with `lo ≤ κ q (t₀ − t₂)` and `κ t ≤ hi` (so the clock runs from `t₀`); and the return
+every ray. Suppose the event's occupancy is in `[0, 1]` up to `t` and at least `q` on
+`[t₂, t₀]`, with `lo ≤ κ q (t₀ − t₂)` and `κ t ≤ hi` (so the clock runs from `t₀`); and the return
 carrier's free occupancy of `Q` is at least `q'` at its own times in `[τ₂, τ₃]`, with
 `τ₂ ≤ c (u₂ − t₀)` and `c t ≤ τ₃`. Then the detector's displacement at `t` is at least
 `ρ q' (t − u₂)`. -/
@@ -207,12 +206,11 @@ theorem le_returnDetectorShift_of_dwell (hHa : Ha.IsHermitian) (hP : P.IsHermiti
     (hQ0 : ∀ p : GenArena κ, 0 ≤ arenaObs Q p) {pa : GenArena ι} (r : GenArena κ)
     {χ₂ : AddCircle (1 : ℝ)} (hρ : 0 ≤ -2 * hh.deriv_periodic.lift χ₂)
     {t₂ t₀ u₂ t q q' τ₂ τ₃ : ℝ} (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0u : t₀ ≤ u₂) (hut : u₂ ≤ t)
-    (hq0 : 0 ≤ q)
     (h0 : ∀ s, 0 ≤ s → s ≤ t →
       0 ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hone : ∀ s, 0 ≤ s → s ≤ t →
       arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa) ≤ 1)
-    (hq : ∀ s, t₂ ≤ s → s ≤ t →
+    (hq : ∀ s, t₂ ≤ s → s ≤ t₀ →
       q ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hlo : lo ≤ -2 * hf.deriv_periodic.lift φ * (q * (t₀ - t₂)))
     (hhi : -2 * hf.deriv_periodic.lift φ * t ≤ hi)
@@ -226,8 +224,8 @@ theorem le_returnDetectorShift_of_dwell (hHa : Ha.IsHermitian) (hP : P.IsHermiti
     (continuous_arenaObs_returnClock hHa hP hHR hf hbc c Q pa r a₀ φ) hu₂ hut
     (fun _ _ _ => hQ0 _) fun u huu hu => hq' _ ?_ ?_) hρ
   · have hclock := le_returnClock_of_dwell hHa hP hf hκ hbc hb0 hc hb1 (pa := pa) h2 h20
-      (h0u.trans huu) hq0 (fun s hs hsu => h0 s hs (hsu.trans hu))
-      (fun s hs hsu => hone s hs (hsu.trans hu)) (fun s hs hsu => hq s hs (hsu.trans hu)) hlo
+      (h0u.trans huu) (fun s hs hsu => h0 s hs (hsu.trans hu))
+      (fun s hs hsu => hone s hs (hsu.trans hu)) hq hlo
       ((mul_le_mul_of_nonneg_left hu hκ).trans hhi)
     have hmono : c * (u₂ - t₀) ≤ c * (u - t₀) :=
       mul_le_mul_of_nonneg_left (by linarith) hc

@@ -24600,4 +24600,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.released_meeting_arrival_records
 
+/-! #437, UA-22: sharper bounds for the released return, what an instance needs (`RecordLayer/UnifiedReleasedBounds.lean`). -/
+
+/-- info: 'CSD.RecordLayer.windowClock_le_of_shut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.windowClock_le_of_shut
+
+/-- info: 'CSD.RecordLayer.returnClock_le_of_obs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnClock_le_of_obs_le
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift_le_of_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift_le_of_clock
+
+/-- info: 'CSD.RecordLayer.le_returnDetectorShift_of_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_returnDetectorShift_of_clock
+
+/-- info: 'CSD.RecordLayer.released_detector_records_of_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_records_of_shift
+
 end CSD.Tests.AxiomAudit

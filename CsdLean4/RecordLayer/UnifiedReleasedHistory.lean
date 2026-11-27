@@ -179,7 +179,7 @@ theorem released_meeting_arrival_records (hHa : Ha.IsHermitian) (hP : P.IsHermit
     (hme : -2 * hf.deriv_periodic.lift φ * tₑ ≤ 2 / 3)
     (ht₁ : 0 ≤ t₁) (hτ₁ : c * t₁ ≤ τ₁)
     (hε : ∀ τ, 0 ≤ τ → τ ≤ τ₁ → arenaObs Q (arenaKick (idxFreeU hHR τ) r) ≤ ε)
-    (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0u : t₀ ≤ u₂) (hut : u₂ ≤ t) (hq0 : 0 ≤ q)
+    (h2 : 0 ≤ t₂) (h20 : t₂ ≤ t₀) (h0u : t₀ ≤ u₂) (hut : u₂ ≤ t)
     (hp0 : ∀ s, 0 ≤ s → s ≤ t →
       0 ≤ arenaObs P (arenaKick (idxCarrierU hHa hP hf φ s) pa))
     (hone : ∀ s, 0 ≤ s → s ≤ t →
@@ -203,8 +203,8 @@ theorem released_meeting_arrival_records (hHa : Ha.IsHermitian) (hP : P.IsHermit
     (fun s hs0 hse => hone s hs0 (hse.trans het)) hεₑ
     (fun s hs2 hse => hq s hs2 (hse.trans het)) hbe hle hme)
   have hD := (mem_compatibleSet _ _ _).1 (released_detector_arrival_records e hHa hP hHR hf hb
-    hh hc hcb hch p₀ hκ hb0 hble hc0 hb1 hQ0 hQ1 r hχ h0 hρ ht₁ hτ₁ hε h2 h20 h0u hut hq0 hp0
-    hone hq hlo hhi hτ₂ hτ₃ hq' hbefore hlate hmax)
+    hh hc hcb hch p₀ hκ hb0 hble hc0 hb1 hQ0 hQ1 r hχ h0 hρ ht₁ hτ₁ hε h2 h20 h0u hut hp0
+    hone (fun s hs2 hs0 => hq s hs2 (hs0.trans (h0u.trans hut))) hlo hhi hτ₂ hτ₃ hq' hbefore hlate hmax)
   rw [mem_compatibleSet]
   intro r' hr'
   simp only [List.mem_cons, List.not_mem_nil, or_false] at hr'

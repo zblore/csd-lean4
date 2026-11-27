@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-278; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-279; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -531,6 +531,21 @@ before the meeting).
    pointer, two for the window (`lo`, `hi`), two for the clock (`τ₂`, `τ₃`), three for
    the detector. Note `κ₀ t ≤ hi` with `κ₀ tₑ ≤ 2/3` and `tₑ ≤ t`: the window must stay
    open for the whole stretch from the display arc on, so `hi ≥ κ₀ t`.
+   (γ5a) is done (2026-11-27, `RecordLayer/UnifiedReleasedBounds.lean`, UD-279). By
+   hand, with UD-245's packet for both carriers (out of the box to `M/4`, in on
+   `[M, 2M]`, tail `1/10`), return ring `M₂`, `T = M₂/c`: clock in
+   `[c (u − 2M), c (u − M/4)]`; early stage to `t₁ = T/4 + M/4`, dwell on
+   `[T + 2M, 2T + M/4]`; the detector needs `1.8 (T − 1.75M) ≥ 1.775 T + 0.025 M`, so
+   `T ≥ 127 M`. E.g. `T = 160M`, `t₁ = 40M`, `u₂ = 162M`, `t = 320M`,
+   `ρ = 1/(426.5 M)`, `κ₀ = 1/(400M)`, `δ = 1/16000`, `lo = 9/4000`, `hi = 4/5`. Left:
+   (γ5b) a smooth periodic window, `0` on an arc and `1` on an arc, e.g.
+   `smoothTransition` of an affine function of `cos (2π (x − x₀))` with the two
+   plateaus from the monotonicity of `cos` on `[0, π]`; (γ5c) the occupancy bounds of
+   UD-245 as lemmas (`≤ 1/10` to `M/4`, `≥ 9/10` on `[M, 2M]`, in `[0, 1]` always) for
+   a carrier of the composite; (γ5d) the numbers. Open for the author: whether the
+   event's pointer may be a gate that is not read, or the four-fact history must be
+   instantiated (then a second pointer on the event, or a long-dwelling event
+   carrier).
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
