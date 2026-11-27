@@ -836,6 +836,7 @@ public import CsdLean4.RecordLayer.UnifiedRadarReading
 public import CsdLean4.RecordLayer.UnifiedRadarSkeleton
 public import CsdLean4.RecordLayer.UnifiedReturnValues
 public import CsdLean4.RecordLayer.UnifiedPentaRun
+public import CsdLean4.RecordLayer.ArcWindow
 public import CsdLean4.RecordLayer.UnifiedReleasedArrival
 public import CsdLean4.RecordLayer.UnifiedReleasedBounds
 public import CsdLean4.RecordLayer.UnifiedReleasedCarrier

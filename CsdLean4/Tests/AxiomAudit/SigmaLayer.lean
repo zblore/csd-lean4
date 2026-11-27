@@ -24622,4 +24622,74 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.released_detector_records_of_shift
 
+/-! #437, UA-20/UA-22: a smooth periodic window, shut on one arc and open on another (`RecordLayer/ArcWindow.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_two_pi_mul_le_of_le_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_two_pi_mul_le_of_le_abs
+
+/-- info: 'CSD.RecordLayer.cos_two_pi_mul_le_of_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_two_pi_mul_le_of_abs_le
+
+/-- info: 'CSD.RecordLayer.arcWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow
+
+/-- info: 'CSD.RecordLayer.arcWindow_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow_periodic
+
+/-- info: 'CSD.RecordLayer.contDiff_arcWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contDiff_arcWindow
+
+/-- info: 'CSD.RecordLayer.arcWindow_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow_nonneg
+
+/-- info: 'CSD.RecordLayer.arcWindow_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow_le_one
+
+/-- info: 'CSD.RecordLayer.cos_arc_radius_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_arc_radius_lt
+
+/-- info: 'CSD.RecordLayer.arcWindow_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow_eq_one
+
+/-- info: 'CSD.RecordLayer.arcWindow_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcWindow_eq_zero
+
+/-- info: 'CSD.RecordLayer.gateWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow
+
+/-- info: 'CSD.RecordLayer.gateWindow_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow_periodic
+
+/-- info: 'CSD.RecordLayer.contDiff_gateWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contDiff_gateWindow
+
+/-- info: 'CSD.RecordLayer.gateWindow_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow_nonneg
+
+/-- info: 'CSD.RecordLayer.gateWindow_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow_le_one
+
+/-- info: 'CSD.RecordLayer.gateWindow_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow_eq_zero
+
+/-- info: 'CSD.RecordLayer.gateWindow_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateWindow_eq_one
+
 end CSD.Tests.AxiomAudit
