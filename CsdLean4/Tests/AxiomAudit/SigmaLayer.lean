@@ -24586,4 +24586,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.released_detector_idle_record
 
+/-! #437, UA-22: the meeting's record and the arrival's record in one history (`RecordLayer/UnifiedReleasedHistory.lean`). -/
+
+/-- info: 'CSD.RecordLayer.released_event_isTickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_event_isTickCount
+
+/-- info: 'CSD.RecordLayer.released_event_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_event_records
+
+/-- info: 'CSD.RecordLayer.released_meeting_arrival_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_meeting_arrival_records
+
 end CSD.Tests.AxiomAudit
