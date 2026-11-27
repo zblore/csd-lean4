@@ -838,6 +838,7 @@ public import CsdLean4.RecordLayer.UnifiedReturnValues
 public import CsdLean4.RecordLayer.UnifiedPentaRun
 public import CsdLean4.RecordLayer.UnifiedReleasedCarrier
 public import CsdLean4.RecordLayer.UnifiedReleasedClock
+public import CsdLean4.RecordLayer.UnifiedReleasedDetector
 public import CsdLean4.RecordLayer.UnifiedReleasedReturn
 public import CsdLean4.RecordLayer.UnifiedTriCarrier
 public import CsdLean4.RecordLayer.UnifiedClockAtRest

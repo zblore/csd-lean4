@@ -24472,4 +24472,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.hamiltonianFlow_released_return_idle
 
+/-! #437, UA-22: a detector on the released return carrier (`RecordLayer/UnifiedReleasedDetector.lean`). -/
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_stepEnergy_arena_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_stepEnergy_arena_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.returnDetectorShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnDetectorShift
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_detector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_detector
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_detector_idle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_detector_idle
+
 end CSD.Tests.AxiomAudit

@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-274; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-275; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -504,6 +504,14 @@ before the meeting).
    `h(χ₂) = 0`, the detector's displacement as `h'(χ₂) ∫ (−2⟨1 ⊗ Q⟩)` along UD-273's
    orbit, which by `arenaObs_return_packet_siteSet` is the packet's weight on the
    detector's sites at the clock; then the tick readout on the third torus.
+   The first part of (γ3) is done (2026-11-27,
+   `RecordLayer/UnifiedReleasedDetector.lean`, UD-275). Left: (γ3b) bounds on
+   `returnDetectorShift` from the return carrier's occupancy of `Q` along the clock
+   (at most `ε` while the clock is below `τ₁`, at least `q` while it is in
+   `[τ₂, τ₃]`), with UD-274 for the clock; (γ3c) a tick readout on the detector's
+   torus for the step arena and the counts as recorded facts, as UD-242 has them on
+   the one-pointer arena; (γ3d) the same with the pointer that carries the release as
+   a torus (`hamiltonianFlow_controlledEnergy`).
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

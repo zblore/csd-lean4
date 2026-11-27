@@ -1054,7 +1054,12 @@ isSymplectic"
 #   hamiltonianFlow_released_return (RecordLayer/UnifiedReleasedReturn.lean) is the composite
 #   with K = H_R - <H_R>, the constant dropped from the ray's motion — EARNED, same scope;
 #   hamiltonianFlow_released_return_idle (RecordLayer/UnifiedReleasedClock.lean) is that flow
-#   with the clock shown to be 0 while the pointer's observable is 0 — EARNED, same scope.)
+#   with the clock shown to be 0 while the pointer's observable is 0 — EARNED, same scope;
+#   RecordLayer/UnifiedReleasedDetector.lean: hamiltonianFlow_stepEnergy_arena_of_lift_eq_zero
+#   is hamiltonianFlow_stepEnergy on a fibre where the new profile vanishes, the argument of
+#   hamiltonianFlow_controlledEnergy_of_lift_eq_zero for any two smooth functions — EARNED;
+#   hamiltonianFlow_released_detector and _detector_idle are that step over
+#   hamiltonianFlow_released_return, on those fibres only — EARNED, no closed form off them.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1264,6 +1269,9 @@ hamiltonianFlow_released_reindex
 hamiltonianFlow_released_composite
 hamiltonianFlow_released_return
 hamiltonianFlow_released_return_idle
+hamiltonianFlow_stepEnergy_arena_of_lift_eq_zero
+hamiltonianFlow_released_detector
+hamiltonianFlow_released_detector_idle
 schrodingerHamiltonian_mul_smul_of_commute
 schrodingerHamiltonian_mul_smul_self
 schrodingerHamiltonian_hamOccA
