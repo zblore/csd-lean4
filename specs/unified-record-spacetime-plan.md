@@ -5375,6 +5375,16 @@ follows the one path through them that is realised, follows the encounter path t
 first broken link, and names what is missing. The registers stay where they are. This
 section cites them.
 
+**The author's framing (2026-11-27).** "CSD defines a surface, a geometry which has
+properties. On this surface records are created, after measurements using the QM
+calculation." Read against this note, that is three things kept apart: the surface
+(the arena of §2: a form, a measure, a flow); the quantum calculation (the carriers'
+unitary orbit and its expectations, UA-8); and the record (a pointer's tick, a definite
+fact on the surface, written from those expectations). In the links below the quantum
+calculation is an input to each record and is not re-derived; what the programme owes
+is how records on the surface are created and linked, and what geometry their relations
+carry. The reading is the assistant's; the sentence is the author's.
+
 **Marks.** Each ingredient is marked **[A]** when the arena supplies it (the energy, its
 parameters, the preparation: Register 1), **[R]** when it is read from the records of one
 run (tick counts), and **[D]** when a named theorem derives it. An ingredient marked [A]
