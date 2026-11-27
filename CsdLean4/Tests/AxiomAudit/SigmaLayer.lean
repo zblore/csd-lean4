@@ -24366,4 +24366,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_band_contact_second_level
 
+/-! #437, UA-22: a return carrier released by a pointer, the composite's flow (`RecordLayer/UnifiedReleasedCarrier.lean`). -/
+
+/-- info: 'CSD.RecordLayer.reindex_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_mul_comm
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_reindex
+
+/-- info: 'CSD.RecordLayer.idxFreeU_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxFreeU_one_kronecker
+
+/-- info: 'CSD.RecordLayer.idxCarrierU_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxCarrierU_kronecker_one
+
+/-- info: 'CSD.RecordLayer.arenaKick_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_one
+
+/-- info: 'CSD.RecordLayer.arenaKick_idxFreeU_one_kronecker_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_idxFreeU_one_kronecker_prodRay
+
+/-- info: 'CSD.RecordLayer.arenaKick_idxCarrierU_kronecker_one_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_idxCarrierU_kronecker_one_prodRay
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_kronecker_one
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_released_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_released_composite
+
 end CSD.Tests.AxiomAudit

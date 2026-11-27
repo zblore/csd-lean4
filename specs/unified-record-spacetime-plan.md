@@ -1592,6 +1592,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-269 | **What the contact launches from the transponder of UA-21 (UO-26, item (2), met with conditions; link L2 of §9).** A messenger `ψ` of norm `1` with any Hermitian Hamiltonian; the transponder with first-level energy `E 0` and Hermitian `H₁`, started in its first level with `χ` of norm `1` on the sites `B`; the contact term of UA-19 (b). `Ω > 0`, `Ω² = g² + ((E 1 − E 0)/2)²`, `κ = (|g|/Ω) ‖(H₁ − E 1) χ‖`. If at every flow time `s` of `[0, t]` every site of `A s` is in contact with every site of `B` and the messenger's orbit has weight at most `ε` off `A s`, the part of the state at `t` with the transponder in its second level has Euclidean norm within `|g| (√ε + κ t) t + κ t` of `(|g|/Ω) |sin (Ω t)|` | `sum_norm_sq_exp_skew_mulVec`, `norm_mul_mul_le_add_of_norm_le_one`, `abs_norm_mul_mul_sub_le_of_norm_le_one`, `one_kronecker_mulVec_prod`, `sum_norm_sq_prod_inLevel_zero`, `levels_add_swap_isHermitian`, `norm_exp_band_sub_levels_mul_prod_le`, `norm_coincProj_levels_orbit_mul_prod_le`, `norm_levelProj_one_levels_orbit_mul_prod`, `transponder_band_contact_second_level` (`RecordLayer/TransponderBandContact.lean`) | **the conditions**: contact from the flow time `0`, so the launch is not shown to follow a meeting in the same run; the sets `A s` and `ε` are hypotheses, the lattice Dirac packet and its box not substituted; `‖(H₁ − E 1) χ‖` not evaluated; a short contact only (`κ t` small), in which the amplitude is at most `|g| t`; no instance; the amplitude in the second level, not a return that travels |
 | UD-270 | **The orbit of a unitary curve on `ℂℙⁿ` has a Schrödinger field for its velocity (a tool for UA-22; UO-24, UO-26).** For a continuous curve `W` of unitaries whose matrix has the derivative `(−i K) W(t)` at `t`, the orbit `s ↦ W s • p` has the manifold derivative `schrodingerField K (W t • p)` at `t`. `K` may change with `t`, so a product of commuting one-parameter groups run with different clocks is covered | `Projectivization.hasDerivAt_chartFun_unitaryCurve_smul_chartInv`, `Projectivization.hasMFDerivAt_unitaryCurve_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceUnitaryCurve.lean`) | a derivative at one time on `ℂℙⁿ` alone: no arena, no pointer, no flow and no uniqueness; the flow of UA-22's release is not built on it yet |
 | UD-271 | **A carrier released by a pointer's angle: the flow, where the released observable vanishes (UA-22, UA-20; UO-24; UO-26, link L2 of §9).** On the one-pointer arena, the energy `−2⟨A⟩ − 2 f(θ₂)⟨B⟩ + c b(θ₁)(−2⟨C⟩)` for any constant `c`, with `C` commuting with `A` and `B`. From a point where `⟨C⟩ = 0` its Hamiltonian flow moves the ray by `exp(−itM) exp(−iκ(t)C)`, `M = A + f(θ₂) B`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`; `θ₁` advances by `f'(θ₂) ∫₀ᵗ (−2⟨B⟩)` along the orbit of `M` alone, as without the term; `θ₂` is fixed. Exact | `schrodingerUnitary_val`, `mul_schrodingerUnitary_of_commute`, `schrodingerUnitary_mul_comm_of_commute`, `continuous_schrodingerUnitary`, `hasDerivAt_schrodingerUnitary_mul_clock`, `hasMFDerivAt_torusWindow`, `releaseField`, `isHamiltonianVectorField_releaseTerm`, `isHamiltonianVectorField_controlObs`, `isHamiltonianVectorField_released`, `schrodingerHamiltonian_mul_smul_of_commute`, `schrodingerHamiltonian_mul_smul_self`, `releasedAngle`, `hasDerivAt_releasedAngle`, `continuous_releasedAngle`, `releasedClock`, `hasDerivAt_releasedClock`, `releasedCurve`, `mul_coupledMatrix_of_commute`, `isMIntegralCurve_releasedCurve`, `hamiltonianFlow_released` (`LF4/ReleasedFlow.lean`) | **only where `⟨C⟩ = 0`**, a closed set with empty interior in general: elsewhere `θ₂` moves at the rate `c (−2⟨C⟩) b'(θ₁)` and nothing is given; `C` commuting with `A` and `B` is a hypothesis, and no carrier is put in; one pointer, the constant `c` standing for the next pointer's profile, the step not composed; no readout, so that the pointer turns into the window is not shown; flow times |
+| UD-272 | **A return carrier released by a pointer: the composite's flow (UA-22; UO-26, link L2 of §9).** Earlier carriers with a Hermitian `H_a` and the observable `P` that the pointer reads; a return carrier with a Hermitian `K` on which no other term acts, `⟨K⟩ = 0` at its ray. For any constant `c`, the Hamiltonian flow of `−2⟨H_a ⊗ 1⟩ − 2 f(θ₂)⟨P ⊗ 1⟩ + c b(θ₁)(−2⟨1 ⊗ K⟩)` from a product ray keeps the ray a product: the earlier carriers move by `exp(−it(H_a + f(θ₂) P))` and the pointer by its displacement, exactly as with no return carrier; the return carrier moves by `exp(−iκ(t)K)`, `κ(t) = c ∫₀ᵗ b(θ₁(u)) du`. Also the flow of UD-271 in a carrier's own coordinates. Exact | `reindex_mul_comm`, `hamiltonianFlow_released_reindex`, `idxFreeU_one_kronecker`, `idxCarrierU_kronecker_one`, `arenaKick_one`, `arenaKick_idxFreeU_one_kronecker_prodRay`, `arenaKick_idxCarrierU_kronecker_one_prodRay`, `idxPointerShift_kronecker_one`, `hamiltonianFlow_released_composite` (`RecordLayer/UnifiedReleasedCarrier.lean`) | **only where the return carrier has `⟨K⟩ = 0`, and from a product ray**; `K = H_R − Ē` is a choice of the preparation and is not made here; the constant `c` stands for the next pointer's profile, the step not composed; no readout and no packet: that the pointer turns into the window, and where the return carrier then is, are not shown; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3617,6 +3618,17 @@ reads: the matrices here are any three that commute as stated. That the event's 
 turns into the window after a meeting and not before. An arrival and its record. R1 to
 R7 of §9.4 are still owed. No new assumption beyond UA-20 and UA-22.
 
+Exact scope of UD-272 (BACKLOG #437; assumptions UA-20, UA-22; obligation UO-26). What it
+gives. UD-271 specialised to what UA-22 (a) to (c) describe: a carrier that only the
+release moves, beside carriers and a pointer that already have theorems. Everything
+proved about those carriers and that pointer on the one-pointer arena holds unchanged
+with the return carrier present, because their part of the flow is the same; so UD-261's
+record of a meeting can be the pointer here once its matrices are substituted. The
+return carrier's state at the flow time `t` is its free state at the clock `κ(t)`. What
+it does not give. That substitution. The return carrier as a packet and its place
+(route (β2)). An arrival record and its control (route (γ)). Anything for a ray that is
+not a product or has `⟨K⟩ ≠ 0` (route (δ)). No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5187,6 +5199,9 @@ time. It is not a statement about every dynamics on `Σ`.
   release, exact where `⟨C⟩ = 0`: the carrier moved by `C` runs with the clock
   `c ∫ b(θ₁)`, and the pointer is not disturbed. No carrier, no readout, nothing off
   `⟨C⟩ = 0`.
+  ▸ **Twenty-ninth brick, 2026-11-27 (BACKLOG #437) → UD-272.** The composite: the
+  earlier carriers and their pointer run as with no return carrier, and the return
+  carrier is its free state at the clock `κ(t)`. No packet, no readout.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5482,8 +5497,9 @@ the author's sentence of 2026-11-26): the pointer that recorded the meeting open
 window through which a carrier prepared at the event moves. Its weight is the whole
 carrier, and the control is the record itself. It needs the flow of UA-20's term on the
 fibres where its profile does not vanish; since UD-271 Lean has it, exact where
-`⟨K⟩ = 0` (`hamiltonianFlow_released`), for matrices not yet specialised to a return
-carrier. Either way R1 to R7 stand as written, and so do L3 to L5.
+`⟨K⟩ = 0` (`hamiltonianFlow_released`), and since UD-272 for a return carrier beside
+the earlier ones (`hamiltonianFlow_released_composite`). Either way R1 to R7 stand as
+written, and so do L3 to L5.
 * **L3 to L5.** Nothing. This arena has no clock and no observer.
 
 **What the receiver has to deliver.** For L3 to start from an encounter, L2 owes one

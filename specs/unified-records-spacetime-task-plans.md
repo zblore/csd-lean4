@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-271; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-272; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -482,6 +482,10 @@ before the meeting).
    of `a` and `exp(−iκ(t)(H_R − Ē))` on `R`. (β2) For `R` the flat Dirac packet: its
    weight in a region at the clock `κ(t)`, so at rest while `κ = 0` and in the moving
    box of UD-221 after. Then (γ), (δ) as listed.
+   (β1) is done (2026-11-27, `RecordLayer/UnifiedReleasedCarrier.lean`, UD-272):
+   `hamiltonianFlow_released_composite`. Next (β2): `K = H_R − Ē` for the lattice Dirac
+   `H_R`, where `exp(−iκK)` is `exp(−iκH_R)` up to a phase that a ray does not see; a
+   packet with `⟨H_R⟩ = Ē`; its weight in a set of sites at the clock `κ(t)`.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

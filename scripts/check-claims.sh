@@ -1047,7 +1047,10 @@ isSymplectic"
 #   hamiltonianFlow_released is the closed form of that energy's flow from a point where <C> = 0,
 #   for C commuting with A and B, by an explicit integral curve and uniqueness — EARNED, at
 #   those points only; schrodingerHamiltonian_mul_smul_of_commute and _mul_smul_self say that
-#   -2<B> and -2<C> are unchanged by commuting unitaries — statements about expectations.)
+#   -2<B> and -2<C> are unchanged by commuting unitaries — statements about expectations;
+#   #437 RecordLayer/UnifiedReleasedCarrier.lean: hamiltonianFlow_released_reindex and
+#   hamiltonianFlow_released_composite are hamiltonianFlow_released read in a carrier's
+#   coordinates and on a product of two carriers — EARNED, and no stronger than it.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1253,6 +1256,8 @@ isHamiltonianVectorField_releaseTerm
 isHamiltonianVectorField_controlObs
 isHamiltonianVectorField_released
 hamiltonianFlow_released
+hamiltonianFlow_released_reindex
+hamiltonianFlow_released_composite
 schrodingerHamiltonian_mul_smul_of_commute
 schrodingerHamiltonian_mul_smul_self
 schrodingerHamiltonian_hamOccA
