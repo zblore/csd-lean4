@@ -845,6 +845,7 @@ public import CsdLean4.RecordLayer.UnifiedReleasedClock
 public import CsdLean4.RecordLayer.UnifiedReleasedDetector
 public import CsdLean4.RecordLayer.UnifiedReleasedHistory
 public import CsdLean4.RecordLayer.UnifiedReleasedInstance
+public import CsdLean4.RecordLayer.UnifiedReleasedLocated
 public import CsdLean4.RecordLayer.UnifiedReleasedRecord
 public import CsdLean4.RecordLayer.UnifiedReleasedReturn
 public import CsdLean4.RecordLayer.UnifiedTriCarrier

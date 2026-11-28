@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-282; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-283; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -557,6 +557,14 @@ before the meeting).
    `P = 0`. Left on this route: (γ3d) the release pointer as a torus; the event's own
    count in the instance (the author's open choice); R5, the time located; the
    instance on fibres of positive measure.
+   (γ6), R5 in a first form, is done (2026-11-28,
+   `RecordLayer/UnifiedReleasedLocated.lean`, UD-283): the return carrier is the fine
+   packet of UD-108, margin `1/k`, tail `1/(100k)`, `n ≥ 100 k³`, `M k ≤ n²`,
+   `c = 1`, gate rate `1/(6000 n²)`, detector rate `k/(10000 n²)`, reading time
+   `3750 n²/k`; the readings are at `1250 n² (π/2 − 1/k)` and
+   `2M + 1250 n² (π/2 + 4/k)`. Left of R5: (γ6b) an event carrier with a sharp
+   arrival (the fine packet as the event carrier too), so that the event's time is
+   resolved and can be late; then the readings as functions of it.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

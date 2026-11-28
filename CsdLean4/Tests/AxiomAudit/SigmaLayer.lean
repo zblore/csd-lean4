@@ -24760,4 +24760,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.released_idle_instance
 
+/-! #437, UA-22: the released return, the detector's count located (`RecordLayer/UnifiedReleasedLocated.lean`). -/
+
+/-- info: 'CSD.RecordLayer.two_fifths_sq_le_one_sub_cos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_fifths_sq_le_one_sub_cos
+
+/-- info: 'CSD.RecordLayer.fineTail_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineTail_le
+
+/-- info: 'CSD.RecordLayer.arenaObs_farHalf_finePacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_farHalf_finePacket_le
+
+/-- info: 'CSD.RecordLayer.le_arenaObs_farHalf_finePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_arenaObs_farHalf_finePacket
+
+/-- info: 'CSD.RecordLayer.released_located_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_located_instance
+
+/-- info: 'CSD.RecordLayer.released_located_idle_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_located_idle_instance
+
+/-- info: 'CSD.RecordLayer.releasedLocated_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedLocated_window
+
 end CSD.Tests.AxiomAudit

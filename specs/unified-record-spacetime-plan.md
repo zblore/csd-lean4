@@ -1603,6 +1603,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-280 | **A window of UA-20 exhibited: smooth, of period `1`, shut on one arc and open on another (UA-20, UA-22; UO-26).** `arcWindow x₀ D₀ D₁` is `Real.smoothTransition` of an affine function of `cos (2π (x − x₀))`: for `0 ≤ D₁ < D₀ ≤ 1/2` it is `1` within `D₁` of `x₀` and `0` at distance between `D₀` and `1 − D₀`. `gateWindow a₀ δ lo hi`, for `0 ≤ δ < lo ≤ hi` with `lo + hi ≤ 1`, has values in `[0, 1]`, is `0` on `[a₀, a₀ + δ]` and `1` on `[a₀ + lo, a₀ + hi]`: the hypotheses on the window in UD-274, UD-276, UD-279 | `cos_two_pi_mul_le_of_le_abs`, `cos_two_pi_mul_le_of_abs_le`, `arcWindow`, `arcWindow_periodic`, `contDiff_arcWindow`, `arcWindow_nonneg`, `arcWindow_le_one`, `cos_arc_radius_lt`, `arcWindow_eq_one`, `arcWindow_eq_zero`, `gateWindow`, `gateWindow_periodic`, `contDiff_gateWindow`, `gateWindow_nonneg`, `gateWindow_le_one`, `gateWindow_eq_zero`, `gateWindow_eq_one` (`RecordLayer/ArcWindow.lean`) | one window, not a class; symmetric about its centre, so it is also shut on the mirror image of `[a₀, a₀ + δ]`; `lo + hi ≤ 1` is what this form needs; not yet used in any flow statement |
 | UD-281 | **The flat packet's occupancy of a set of sites, as lemmas (UA-22; UO-26, route (γ5c)).** (i) The occupancy of a set of sites is in `[0, 1]` at every ray, for any site map. (ii) Along the free orbit of the flat packet's ray it is the packet's weight on the sites; at a free time `s ≥ 0` it is at most `flatTailD s` while the moving box misses the sites and at least `1 − flatTailD s` while the box lies in them. (iii) For the packet and the box of UD-245 (`L = 8M`, `M ≥ 4·10⁶`): at most `1/10` up to `M/4`, at least `9/10` from `M` to `2M` | `arenaObs_siteSetProj`, `arenaObs_siteSetProj_nonneg`, `arenaObs_siteSetProj_le_one`, `re_chainInnerD_flatPacket`, `arenaObs_siteSetProj_flatPacket`, `arenaObs_flatPacket_le_of_disjoint`, `le_arenaObs_flatPacket_of_subset`, `arenaObs_arrivalBox_le`, `le_arenaObs_arrivalBox` (`RecordLayer/PacketOccupancy.lean`) | nothing new about the packet: the estimates of UD-243 and UD-245, which were steps inside their proofs, as statements about `arenaObs` along `idxFreeU`; free times, which in the released return are the clock and not the flow time; no instance of the released return |
 | UD-282 | **The released return, an instance with numbers (UA-20, UA-22; UO-26, R1 to R4 of §9.4 in part).** (i) The detector's two counts from the two carriers' free occupancies, a window shut on `[a₀, a₀ + δ]` and open on `[a₀ + lo, a₀ + hi]`, and nine inequalities between numbers; the clock's bounds are no longer hypotheses. (ii) The control with a return carrier that starts with at most `ε'` on the detector. (iii) An instance: two copies of the torus of UD-245 (`L = 8M`, `M ≥ 4·10⁶`), each carrier its flat packet read on `arrivalBox`; the window `gateWindow (1/6) (1/16000) (9/4000) (4/5)`; `c = 1/160`; the event pointer's rate `1/(400M)`, the detector's `2/(853M)`. The detector counts `0` at the flow time `40M` and `1` at `320M`. (iv) Its control: with the event pointer coupled to nothing (`P = 0`) the detector counts `0` at `320M` | `released_detector_record_zero_of_shift`, `released_detector_records_of_occupancy`, `released_detector_idle_record_of_occupancy`, `releasedGateRate_scaledTrainF`, `releasedDetectorRate_scaledTrainF`, `released_arrival_instance`, `released_idle_instance` (`RecordLayer/UnifiedReleasedInstance.lean`) | the event is one carrier reaching a region (UD-245), not the meeting of two carriers (UD-261); the event's pointer is a gate and is not read, so the four-fact history of UD-278 is not instantiated; one fibre (both second angles `0`, a null set) and a product ray; the delay is set by the supplied `c`, rates and window: no time located (R5), no speed derived (UO-32); narrow margins (`1/3 ≤ 1422/4265`, `568/853 ≤ 2/3`); the control changes the energy; flow times |
+| UD-283 | **The released return, the detector's count located (UA-8, UA-20, UA-22; UO-26, R5 of §9.4 in part).** The event carrier, its region and the fibres are those of UD-282. The return carrier is the fine packet of index `n` of UD-108 on a ring of at least `640000 n³` sites, the detector on the far half, `c = 1`. (i) For `n ≥ 100 k³` the packet's free occupancy of the far half is at most `1/(100k)` up to its own time `1250 n² (π/2 − 1/k)` and at least `1 − 1/(100k)` on `[1250 n² (π/2 + 1/k), 1250 n² (3π/2 − 1/k)]`. (ii) For `k ≥ 2`, `n ≥ 100 k³`, `M k ≤ n²` the detector counts `0` at the flow time `1250 n² (π/2 − 1/k)` and `1` at `2M + 1250 n² (π/2 + 4/k)`. (iii) The control: with the event pointer coupled to nothing it counts `0` at the later time. (iv) Both times are within the relative distance `13/(5k)` of `625π n²`, a quarter of the ring over the packet's velocity `4/5`; the first is later than `2M`, the end of the event's window | `two_fifths_sq_le_one_sub_cos`, `fineTail_le`, `arenaObs_farHalf_finePacket_le`, `le_arenaObs_farHalf_finePacket`, `released_located_instance`, `released_located_idle_instance`, `releasedLocated_window` (`RecordLayer/UnifiedReleasedLocated.lean`) | the event's time (between `M/4` and `2M ≤ 2n²/k`) is inside the error: no run has a late event, and that the count's time moves with the event's is not shown; the prediction `625π n²` uses the supplied velocity, ring length and `c = 1`, and with another `c` the delay is divided by `c` (UO-32 not touched); a family of arenas, the ring, the rates and the window fitted to `M`, `n`, `k`; three fifths of the gap between the readings is the detector's reading time; one fibre, a product ray, the event's pointer not read, the event the arrival of UD-245; flow times (R7 untouched) |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3724,6 +3725,20 @@ here the event is the arrival of UD-245. A count of the event's own pointer. A d
 that is a travel time: `40M` and `320M` follow from `c`, the two rates and the window,
 all supplied. No new assumption.
 
+Exact scope of UD-283 (BACKLOG #437; assumptions UA-8, UA-20, UA-22; obligation UO-26).
+What it gives. R5 in a first form, on the released return: the detector's count `0` and
+its count `1` are at flow times that bracket `625π n²`, the distance to the detector
+over the return packet's velocity, within the relative error `13/(5k)`, for every
+`k ≥ 2`, with the control in the same family. The error has three parts, all stated:
+the margin `1/k` at which the packet's occupancy is bounded, the detector's reading
+time, and the event's own window `2M`. What it does not give. The "plus" of R5: the
+event's time is smaller than the error in every run of the family, so no theorem here
+shows the count's time moving with the event's time; that needs an event carrier whose
+arrival is as sharp as the return's. One system: each `k` has its own ring, rates and
+window. A derived speed: the velocity `4/5` and the constant `c = 1` are supplied
+(UO-32). R2 on every fibre, R3 on a set of positive measure, the meeting of UD-261 as
+the event, R6, R7. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -5329,6 +5344,10 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **Thirty-ninth brick, 2026-11-28 (BACKLOG #437) → UD-282.** An instance of the
   released return: the detector counts `0` at `40M` and `1` at `320M`, and `0` at
   `320M` in the control. One fibre; the event's pointer not read; no time located.
+  ▸ **Fortieth brick, 2026-11-28 (BACKLOG #437) → UD-283.** The count located: with
+  the fine packet of UD-108 as the return carrier the detector counts `0` and `1` at
+  flow times within the relative distance `13/(5k)` of `625π n²`. The event's time
+  is inside the error; one fibre; the speed supplied.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5655,8 +5674,13 @@ UA-21).
   the torus of UD-245, the detector counts `0` at `40M` and `1` at `320M`) and its
   control `released_idle_instance` (count `0` at `320M`). That run is on one fibre,
   its event is the arrival of UD-245 and not the meeting of UD-261, and its event
-  pointer is a gate that is not read. Still owed: R2 on every fibre and R3 on a set
-  of positive measure, the meeting as the event, the time located (R5), the
+  pointer is a gate that is not read. Since UD-283 the count is located in a first
+  form (R5 in part): with a sharp return packet on a ring the two readings are
+  within the relative distance `13/(5k)` of the distance over the packet's
+  velocity (`released_located_instance`, `releasedLocated_window`). The event's
+  own time is inside that error, so the readings are not yet shown to move with
+  it. Still owed: R2 on every fibre and R3 on a set of positive measure, the
+  meeting as the event, a late event with a sharp arrival (the rest of R5), the
   receiver's clock (R7).
 
 **Two ways across.** Linking one record to a later one is not what is missing: the wall
