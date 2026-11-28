@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-281; UA-21, UA-22 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-282; UA-21, UA-22 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -550,8 +550,13 @@ before the meeting).
    With the numbers above `lo + hi = 9/4000 + 4/5 ≤ 1` holds.
    (γ5c) is done (2026-11-28, `RecordLayer/PacketOccupancy.lean`, UD-281):
    `arenaObs_siteSetProj_nonneg`, `arenaObs_siteSetProj_le_one` at every ray;
-   `arenaObs_arrivalBox_le`, `le_arenaObs_arrivalBox` for the packet of UD-245. Left:
-   (γ5d) the numbers.
+   `arenaObs_arrivalBox_le`, `le_arenaObs_arrivalBox` for the packet of UD-245.
+   (γ5d) is done (2026-11-28, `RecordLayer/UnifiedReleasedInstance.lean`, UD-282), with
+   one ring size `M` for both carriers, `c = 1/160`, `t₁ = 40M`, `u₂ = 162M`,
+   `t = 320M`, rates `1/(400M)` and `2/(853M)`, the window above, and the control with
+   `P = 0`. Left on this route: (γ3d) the release pointer as a torus; the event's own
+   count in the instance (the author's open choice); R5, the time located; the
+   instance on fibres of positive measure.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.

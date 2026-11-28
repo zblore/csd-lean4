@@ -24730,4 +24730,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.le_arenaObs_arrivalBox
 
+/-! #437, UA-22: the released return, an instance with numbers (`RecordLayer/UnifiedReleasedInstance.lean`). -/
+
+/-- info: 'CSD.RecordLayer.released_detector_record_zero_of_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_record_zero_of_shift
+
+/-- info: 'CSD.RecordLayer.released_detector_records_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_records_of_occupancy
+
+/-- info: 'CSD.RecordLayer.released_detector_idle_record_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_detector_idle_record_of_occupancy
+
+/-- info: 'CSD.RecordLayer.releasedGateRate_scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedGateRate_scaledTrainF
+
+/-- info: 'CSD.RecordLayer.releasedDetectorRate_scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.releasedDetectorRate_scaledTrainF
+
+/-- info: 'CSD.RecordLayer.released_arrival_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_arrival_instance
+
+/-- info: 'CSD.RecordLayer.released_idle_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.released_idle_instance
+
 end CSD.Tests.AxiomAudit
