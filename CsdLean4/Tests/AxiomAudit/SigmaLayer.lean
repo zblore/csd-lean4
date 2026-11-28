@@ -24692,4 +24692,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.gateWindow_eq_one
 
+/-! #437, UA-22: the flat packet's occupancy of a set of sites, as lemmas (`RecordLayer/PacketOccupancy.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj_nonneg
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj_le_one
+
+/-- info: 'CSD.RecordLayer.re_chainInnerD_flatPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_chainInnerD_flatPacket
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj_flatPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj_flatPacket
+
+/-- info: 'CSD.RecordLayer.arenaObs_flatPacket_le_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_flatPacket_le_of_disjoint
+
+/-- info: 'CSD.RecordLayer.le_arenaObs_flatPacket_of_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_arenaObs_flatPacket_of_subset
+
+/-- info: 'CSD.RecordLayer.arenaObs_arrivalBox_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_arrivalBox_le
+
+/-- info: 'CSD.RecordLayer.le_arenaObs_arrivalBox' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_arenaObs_arrivalBox
+
 end CSD.Tests.AxiomAudit
