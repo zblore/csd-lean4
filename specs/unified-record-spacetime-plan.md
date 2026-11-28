@@ -5312,7 +5312,7 @@ time. It is not a statement about every dynamics on `Σ`.
 ### The skeleton's obligations (§9, 2026-11-26)
 
 Named by §9. Each is a missing implication between two links there. None is met, and none
-has a Lean statement.
+has a Lean statement. UO-32 was added on 2026-11-28 with §9.7.
 
 * **UO-27. The same event, from records.** On the arena of UA-18 the relay reading of `A`
   and the return reading of `B` concern one event because the energy has one messenger and
@@ -5353,6 +5353,20 @@ has a Lean statement.
   flow time) and of Register 1. *Test:* UO-18's. A limit in which the lattice scale is sent
   to zero by a hypothesis is the continuum limit of UA-8 restated. Curvature and the
   dynamics of gravity are not in this obligation.
+* **UO-32. The limiting speed, from the dynamics (added 2026-11-28, §9.7).** Two halves,
+  on one arena and in one scaling family. (a) *A bound.* Two preparations that differ
+  only at one place (the meeting and no meeting of UO-26 are such a pair) give a remote
+  record the same count up to a stated flow time, within a stated error, and that time
+  is the distance over a speed `c_Σ` computed from the energy. (b) *Signals that
+  approach it.* A family of carriers whose remote record does differ at times that tend
+  to the bound's, in the same limit in which the error of (a) tends to zero. Then: the
+  same `c_Σ` for every direction and for observers in relative motion, within stated
+  errors, and `c_Σ` in place of the literal `1` of L3 and L4. *Test:* a bound whose
+  rate is the operator norm of the generator (UD-230: `2 ‖H‖`, not computed) is a
+  bound and not a speed. A signal speed that is the band velocity of a prepared
+  momentum, with no bound it approaches, is the arena's parameter (UA-8) restated. A
+  cone whose weight outside is only bounded by a tail that the limit does not send to
+  zero is not a cone. Not met; no Lean statement.
 
 ---
 
@@ -5520,7 +5534,8 @@ obligation.
   `lorentzBoost 1`, `radarInterval` and `minkowskiSqD` [A]. The messenger of the wall run
   has rest energy `1/k`, and its defect from `1` is part of the error `151 K/k` [D]. For
   `d ≥ 2` the speed depends on the direction at order `(a p)²` (UD-207), which no statement
-  of L3 yet carries.
+  of L3 yet carries. That the speed of L2 and the `1` of L3 are one quantity, fixed by
+  the dynamics, is UO-32 (§9.7).
 * **The observers' separation** enters at L3. In `1 + 1` it is the distance `π K`, the whole
   chain [A]. For `d ≥ 2` it is `RadarGeneralPosition`, a hypothesis [A]. It is the scale of
   every relative error at L4 and L5 (`radar_error_relative`).
@@ -5714,6 +5729,66 @@ The wall run meets 1, 6 and, for one event, 7. It meets 3 except for the unit an
 velocity. It does not meet 2, 4 or 5. The encounter path meets 1 and the half of 2 that is
 local. By §1 a theorem meeting all seven is still an operational reconstruction from UA-8.
 Which assumptions force the geometry is M8.
+
+### 9.7 The limiting speed: a conjecture and an obligation
+
+Added 2026-11-28 at the author's instruction, from an outside reading of this section.
+No Lean and no new assumption: a conjecture is not a hypothesis of any theorem here, and
+if it is ever used as one it gets a UA number first.
+
+**The conjecture (a physical conjecture of CSD).** The local dynamics on `Σ` limits how
+quickly an intervention at one record can influence another. Observers who reconstruct
+space and time from signal exchanges measure that limiting speed as `c`. Light in vacuum
+propagates at this limit.
+
+* **Limiting.** Information can travel more slowly. The question is: if what happens
+  here is changed, how soon can a record there tell the two possibilities apart? The
+  meeting and no-meeting control of §9.4 (R4) is the experiment that asks it.
+* **Which property of the surface.** Not the surface alone. One symplectic surface
+  carries many Hamiltonians, and which degrees of freedom couple, and how strongly
+  against a clock, changes how influence spreads. So the cause is the local interaction
+  structure and the dynamics on `Σ`, which in this note's marks is the energy [A]
+  (Register 1). What is to be explained is which properties of the physical `Σ` select
+  one causal cone. That is a question of M8.
+* **Two quantities to be joined.** At L2 the return carrier has a speed set by its
+  chosen dynamics. At L3 the radar construction takes a limiting speed as an input and
+  writes it as `1`. Setting `c = 1` is a choice of units. The emergence result would be
+  that the fastest distinguishable influence gives the same cone for different
+  observers and directions. §9.2 already records a direction-dependent term for
+  `d ≥ 2` (UD-207).
+* **Both halves are needed.** A propagation bound can be loose, and a lattice has small
+  weight outside any effective cone. A measured packet speed settles neither (Bravyi,
+  Hastings and Verstraete, *Phys. Rev. Lett.* **97**, 050401 (2006)). Hence UO-32: a
+  bound on how early a remote record can distinguish two local preparations, and
+  signals that approach that bound in the same scaling limit.
+
+**What the corpus holds toward it.**
+
+* *Upper bounds.* The cone on any graph, with the lattice Dirac Hamiltonian on the torus
+  as an instance (UD-230); the same for a detector's pointer (UD-231) and for a packet,
+  with the packet's weight off its box as an added term (UD-247); the ring's bounds
+  (`RecordLayer/ChainCone.lean`, `RecordLayer/UnifiedCausalOrder.lean`, UA-14). In all
+  of them the rate is `2 ‖H‖` and is not computed, the weight outside is a factorial
+  tail and not zero, and by UD-247's scope no instance shows the bound, and not the
+  pointer's rate, to be what keeps a pointer from displaying.
+* *Arrivals.* A response at the neighbouring site, distance one (BACKLOG ~~#362~~);
+  packets that move at their band velocity (UD-221, UD-222); the messenger of the wall
+  run, whose defect from speed `1` is part of the error `151 K/k`.
+* *Not held.* That the bound's rate and the fastest band velocity agree in any limit.
+  One speed for all directions when `d ≥ 2`. The limiting speed read from records by
+  two groups of observers.
+
+**Its bearing on the released return (UA-22).** There the return carrier moves at the
+rate `c` of the release term times the window, and `c` is a supplied constant. Scaling
+`c` scales the carrier's part of the energy and with it any bound of the kind above, so
+the released return does not escape a cone. But its delay is set by a parameter and
+not by a limit. One return shows that information crossed. The conjecture is that the
+dynamics of `Σ` fixes the earliest it could have crossed, and R5 (the time located)
+is where the two meet.
+
+**Against §9.6.** UO-32 is not among the seven criteria. They ask for a reconstruction
+given a limiting speed. UO-32 asks where that speed comes from, and a theorem meeting
+all seven with the speed still [A] would leave the conjecture open.
 
 References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#408~~ (the carriers on the walled chain), ~~#409~~ (the walled chain with numbers), ~~#410~~ (the chain's coincidence relation), ~~#411~~ (the wall gate for wall states), ~~#412~~ (the four times), ~~#413~~ (a fast messenger), ~~#414~~ (the gates' flow times), ~~#415~~ (the tolerance test for one gate), ~~#416~~ (the odd sector as a chain), ~~#417~~ (the observer at the far wall), ~~#418~~ (event times; the rate relation), ~~#419~~ (histories from where the carriers are), ~~#420~~ (the moving observer's two histories), ~~#421~~ (the relay history), ~~#422~~ (the meeting histories), ~~#423~~ (one run on the walled chain), ~~#424~~ (the seven gate intervals), ~~#425~~ (the family's conditions), ~~#426~~ (the family's run), ~~#427~~ (stability of histories), ~~#428~~ (the run on any fibre and its drift), ~~#429~~ (the top-down theorem from any pointer angles), ~~#430~~ (the walled chain from an open set of pointer angles), ~~#431~~ (the plan's theorem for the family), ~~#432~~ (radar coordinates, the interval, the bridge and the audit), ~~#433~~ (the interval's residual), ~~#434~~ (the interval's lower bound; UO-16 marked), ~~#435~~ (an explicit radius), ~~#294~~ (the lattice Dirac Hamiltonian in `d` dimensions), ~~#295~~ (the lattice's preferred directions), ~~#436~~ (tick counts as recorded facts), #296 (packets in `d` dimensions, first part), #437 (a return caused at the event), ~~#438~~ (a preparation for the five-record history), #439 (the macroscopic projection of the radar records), #440 (a record that controls a second apparatus), #441 (the Born bridge for tick records), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
